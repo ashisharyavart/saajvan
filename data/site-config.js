@@ -48,8 +48,8 @@ window.SITE_CONFIG = {
     email: "studio@yourfirm.com",
     phoneDisplay: "+91 00000 00000",   // shown as text
     phoneHref: "tel:+910000000000",    // used in tel: / call links (digits only after "tel:")
-    whatsappHref: "https://wa.me/910000000000",
-    instagramHref: "https://instagram.com/yourfirm",
+    whatsappHref: "https://wa.me/919582300708",
+    instagramHref: "https://instagram.com/saajvan",
     locationLine: "Based worldwide · Projects everywhere"
   },
 
