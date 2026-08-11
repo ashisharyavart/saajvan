@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Your Firm Name — We Shape the Essence of Modern Living</title>
+  <meta id="pageDescription" name="description"
+    content="Your Firm Name — residential and commercial interior architecture, space planning and 3D visualization.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://db.onlinewebfonts.com/c/b4d584ed0e53ba94a815f817690faab2?family=Brittany+Signature"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- All firm-specific info (name, contact, location, team) lives in data/site-config.js -->
+  <script src="data/site-config.js"></script>
+</head>
+
+<body>
+
+  <!-- ============ TOP LINE ============ -->
+  <div class="top-line"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a href="#top" class="logo">
+        <span class="logo-mark" id="logoMark">YF</span>
+        <span class="logo-text" id="logoText">SAAJVAN DESIGN<br>STUDIO</span>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="#top">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a href="#contact" class="btn btn-dark header-cta">Contact Us</a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ HERO — AUTOPLAY-ONCE VIDEO ============ -->
+  <!--
+  HOW THIS WORKS
+  The video plays once, automatically, as soon as the page loads — no scroll
+  interaction required. It is NOT set to loop, so it simply stops on its
+  last frame once finished, leaving the fully transformed, designed space
+  on screen behind the headline.
+
+  REPLACE the <source> below with your own footage:
+  - Shoot/render a clip of a space that starts completely empty and
+    transforms, frame by frame, into a fully designed room (furniture,
+    lighting, materials appearing progressively).
+  - Export at 1920x1080+, H.264, no audio needed (video is muted).
+  - End on a clean, uncluttered final frame — that's the frame visitors
+    will actually sit and look at once playback finishes.
+  - Put the file at assets/videos/hero-transform.mp4 and a first-frame still
+    at assets/images/hero-poster.jpg (used before the video loads).
+-->
+  <section class="hero" id="hero">
+    <div class="hero-pin" id="heroPin">
+      <div class="hero-video-frame">
+        <video id="heroVideo" class="hero-video" autoplay muted playsinline preload="auto"
+          poster="assets/images/hero-poster.jpg">
+          <source src="assets/videos/hero-transform.mp4" type="video/mp4">
+        </video>
+        <div class="hero-video-scrim"></div>
+      </div>
+
+      <div class="hero-copy" id="heroCopy">
+        <p class="eyebrow" id="heroEyebrow">We shape the essence of modern living</p>
+        <h1 class="hero-title" id="heroTitle">SAAJVAN DESIGN<br>STUDIO</h1>
+        <p class="hero-desc" id="heroDesc">From contemporary residences to sophisticated commercial spaces, we transform
+          ideas into beautifully curated interiors — designed with precision, premium materials, and a commitment to
+          spaces that are both visually stunning and effortlessly functional.</p>
+        <a href="#contact" class="btn btn-dark">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS SECTION ============ -->
+  <section class="stats-section" id="about">
+    <div class="stats-container">
+      <div class="stats-row">
+        <div class="stat-block">
+          <div class="stat-num-container">
+            <span class="stat-number" data-target="12">0</span><span class="stat-suffix">+</span>
+          </div>
+          <span class="stat-label">Years of Experience</span>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num-container">
+            <span class="stat-number" data-target="150">0</span><span class="stat-suffix">+</span>
+          </div>
+          <span class="stat-label">Clients Served</span>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num-container">
+            <span class="stat-number" data-target="4.9" data-decimals="1">0.0</span><span class="stat-suffix">★</span>
+          </div>
+          <span class="stat-label">Google Rating</span>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num-container">
+            <span class="stat-number" data-target="300">0</span><span class="stat-suffix">+</span>
+          </div>
+          <span class="stat-label">Projects Completed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="services" id="services">
+    <p class="eyebrow eyebrow-center">Services</p>
+    <h2 class="section-title section-title-center">What we design</h2>
+
+    <!-- Service 01: Space Planning & Layout -->
+    <article class="service-row">
+      <div class="service-media">
+        <video class="loop-video" muted playsinline preload="none" poster="assets/images/service-planning-poster.jpg">
+          <source src="assets/videos/service-planning.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="service-copy">
+        <span class="service-index">01</span>
+        <h3>Space Planning &amp; Layout</h3>
+        <ul class="service-list">
+          <li>Clear floor plans in place of guesswork — built for everyday flow.</li>
+          <li>Planning tailored to your household or team, not a generic template.</li>
+          <li>A firm foundation every later decision is built on.</li>
+        </ul>
+        <a href="#contact" class="text-link">Plan your layout →</a>
+      </div>
+    </article>
+
+    <!-- Service 02: 3D Visualization -->
+    <article class="service-row service-row-reverse">
+      <div class="service-media">
+        <video class="loop-video" muted playsinline preload="none" poster="assets/images/service-3d-poster.jpg">
+          <source src="assets/videos/service-3d.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="service-copy">
+        <span class="service-index">02</span>
+        <h3>3D Visualization</h3>
+        <ul class="service-list">
+          <li>See your space before it exists, in photoreal light and material.</li>
+          <li>Clarity before construction — fewer surprises, fewer change orders.</li>
+          <li>Every detail tuned to your space, routine and aesthetic.</li>
+        </ul>
+        <a href="#contact" class="text-link">Visualize your space →</a>
+      </div>
+    </article>
+
+    <!-- Service 03: Residential Interiors -->
+    <article class="service-row service-row-full-left">
+      <div class="service-media">
+        <video class="loop-video" muted playsinline preload="none"
+          poster="assets/images/service-residential-poster.jpg">
+          <source src="assets/videos/service-residential.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="service-copy">
+        <span class="service-index">03</span>
+        <h3>Residential Interiors</h3>
+        <ul class="service-list">
+          <li>Individually curated furniture, materials and finishes matched to how you live.</li>
+          <li>A cohesive colour and material moodboard for every room.</li>
+          <li>A direct, shoppable product list so the concept is easy to build.</li>
+        </ul>
+        <a href="#contact" class="text-link">Start a residential project →</a>
+      </div>
+    </article>
+
+    <!-- Service 04: Commercial Spaces -->
+    <article class="service-row service-row-full-right">
+      <div class="service-copy">
+        <span class="service-index">04</span>
+        <h3>Commercial Spaces</h3>
+        <ul class="service-list">
+          <li>Layouts built for footfall, function and brand — retail, hospitality and office.</li>
+          <li>Material and lighting concepts that hold up to daily commercial use.</li>
+          <li>Coordinated handover with contractors and vendors.</li>
+        </ul>
+        <a href="#contact" class="text-link">Discuss a commercial fit-out →</a>
+      </div>
+      <div class="service-media">
+        <video class="loop-video" muted playsinline preload="none" poster="assets/images/service-commercial-poster.jpg">
+          <source src="assets/videos/service-commercial.mp4" type="video/mp4">
+        </video>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ PORTFOLIO ============ -->
+  <section class="portfolio" id="portfolio">
+    <div class="portfolio-head">
+      <div>
+        <p class="eyebrow">Selected work</p>
+        <h2 class="section-title">Portfolio</h2>
+      </div>
+      <p class="portfolio-note">Each project plays once as it comes into view, then settles on the finished space.</p>
+    </div>
+
+    <div class="portfolio-grid">
+
+      <a class="portfolio-card card-kitchen" href="#contact">
+        <img src="assets/images/portfolio-kitchen.jpg" alt="Kitchen Architecture">
+        <div class="portfolio-card-title">KITCHEN</div>
+      </a>
+
+      <a class="portfolio-card card-dining" href="#contact">
+        <img src="assets/images/portfolio-bathroom.jpg" alt="Bathroom Design">
+        <div class="portfolio-card-title">BATHROOM</div>
+      </a>
+
+      <a class="portfolio-card card-bedroom" href="#contact">
+        <img src="assets/images/portfolio-bedroom.png" alt="Bedroom Suite">
+        <div class="portfolio-card-title">BEDROOM</div>
+      </a>
+
+      <a class="portfolio-card card-living" href="#contact">
+        <img src="assets/images/portfolio-living.png" alt="Living Room">
+        <div class="portfolio-card-title">LIVING</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ TEAM ============ -->
+  <section class="team" id="team">
+    <p class="eyebrow eyebrow-center">The studio</p>
+    <h2 class="section-title section-title-center">Team</h2>
+
+    <div class="team-grid" id="teamGrid">
+      <!-- Team cards are generated automatically from data/site-config.js -->
+    </div>
+  </section>
+
+  <!-- ============ CTA BANNER ============ -->
+  <section class="cta-banner" id="contact">
+    <h2>Ready to shape<br>your space?</h2>
+    <p>Let's plan your room, your office, or your storefront — together.</p>
+    <a href="mailto:studio@yourfirm.com" id="ctaEmailLink" class="btn btn-dark">Book a Consultation</a>
+    <p class="cta-note">Free &amp; no obligation · ~15 min call</p>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text" id="footerLogoText">YOUR FIRM<br>NAME</span>
+        <p id="footerTagline">Interior architecture, space planning and 3D visualization — for projects worldwide.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:studio@yourfirm.com" id="footerEmailLink">studio@yourfirm.com</a>
+        <a href="tel:+910000000000" id="footerPhoneLink">+91 00000 00000</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#team">Team</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Impressum</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span id="footerCopyright">© 2026 Your Firm Name.</span>
+      <span id="footerLocation">Based worldwide · Projects everywhere</span>
+    </div>
+  </footer>
+
+  <!-- ============ FLOATING ACTION BUTTONS ============ -->
+  <div class="fab-stack">
+    <a class="fab fab-whatsapp" id="fabWhatsapp" href="https://wa.me/910000000000" aria-label="WhatsApp" target="_blank"
+      rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.93-.19-.3A7.93 7.93 0 1 1 12 20Zm4.34-5.94c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.53.12-.16.24-.6.77-.74.93-.14.16-.27.18-.5.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.53-1.28-.73-1.75-.19-.46-.38-.4-.53-.4h-.45c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z" />
+      </svg>
+    </a>
+    <a class="fab fab-instagram" id="fabInstagram" href="https://instagram.com/" aria-label="Instagram" target="_blank"
+      rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.43.4a4.9 4.9 0 0 1 1.77 1.15 4.9 4.9 0 0 1 1.15 1.77c.16.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.4 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.46.16-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.43-.4a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.16-.46-.35-1.26-.4-2.43-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.24-1.97.4-2.43A4.9 4.9 0 0 1 3.95 3.78 4.9 4.9 0 0 1 5.72 2.63c.46-.16 1.26-.35 2.43-.4C9.42 2.17 9.8 2.16 12 2.16Zm0 1.8c-3.15 0-3.5.01-4.73.07-.96.04-1.48.2-1.83.34-.46.18-.79.4-1.13.75-.35.34-.57.67-.75 1.13-.14.35-.3.87-.34 1.83-.06 1.23-.07 1.58-.07 4.73s.01 3.5.07 4.73c.04.96.2 1.48.34 1.83.18.46.4.79.75 1.13.34.35.67.57 1.13.75.35.14.87.3 1.83.34 1.23.06 1.58.07 4.73.07s3.5-.01 4.73-.07c.96-.04 1.48-.2 1.83-.34.46-.18.79-.4 1.13-.75.35-.34.57-.67.75-1.13.14-.35.3-.87.34-1.83.06-1.23.07-1.58.07-4.73s-.01-3.5-.07-4.73c-.04-.96-.2-1.48-.34-1.83a3.1 3.1 0 0 0-.75-1.13 3.1 3.1 0 0 0-1.13-.75c-.35-.14-.87-.3-1.83-.34-1.23-.06-1.58-.07-4.73-.07Zm0 3.98a5.06 5.06 0 1 1 0 10.12 5.06 5.06 0 0 1 0-10.12Zm0 1.8a3.26 3.26 0 1 0 0 6.52 3.26 3.26 0 0 0 0-6.52Zm5.26-2a1.18 1.18 0 1 1 0 2.36 1.18 1.18 0 0 1 0-2.36Z" />
+      </svg>
+    </a>
+    <a class="fab fab-phone" id="fabPhone" href="tel:+910000000000" aria-label="Call">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8Z" />
+      </svg>
+    </a>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

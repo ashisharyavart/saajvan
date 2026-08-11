@@ -1,0 +1,12 @@
+{
+  "name": "bilvary-website",
+  "version": "1.0.0",
+  "description": "Bilvary architecture website starter",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y browser-sync start --server --files \"index.html, css/**/*.css, js/**/*.js, data/**/*.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
