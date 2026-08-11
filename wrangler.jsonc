@@ -1,7 +1,4 @@
 {
     "name": "saajvan",
-    "compatibility_date": "2026-08-11",
-    "assets": {
-        "directory": "./"
-    }
+    "pages_build_output_dir": "./"
 }
