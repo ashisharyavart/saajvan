@@ -142,14 +142,11 @@ section{position:relative;}
   align-items:center;
   gap:28px;
 }
-.logo{display:flex; align-items:center; gap:12px; margin-right:auto;}
-.logo-mark{
-  width:46px; height:46px;
-  background:var(--wood);
-  border:1px solid var(--line-dark);
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-display);
-  font-size:15px; font-weight:600; color:var(--line-dark);
+.logo{display:flex; align-items:center; margin-right:auto;}
+.logo-img{
+  height:50px;
+  width:auto;
+  object-fit:contain;
 }
 .logo-text{
   font-family:var(--font-body);
