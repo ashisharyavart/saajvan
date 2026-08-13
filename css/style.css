@@ -531,9 +531,10 @@ section{position:relative;}
   font-weight:500;
 }
 .about-us-desc{
-  font-family:'Arizonia', cursive;
-  font-size:22px;
+  font-family:var(--font-display);
+  font-size:16px;
   font-weight:400;
+  font-style:italic;
   line-height:1.8;
   color:var(--ink-soft);
   margin:0;
