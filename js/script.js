@@ -134,18 +134,15 @@ document.addEventListener('DOMContentLoaded', () => {
   revealTargets.forEach(el => revealObserver.observe(el));
 
   /* ---------- 3. Hero video: autoplay once, freeze on last frame ---------- */
-  const heroVideo = document.getElementById('heroVideo');
-  if (heroVideo) {
-    // `autoplay` is set in HTML; this is a safety net for browsers that
-    // need playback kicked off manually. No loop attribute anywhere, so
-    // the video simply stops on its final (fully transformed) frame.
-    heroVideo.play().catch(() => {
+  const heroVideos = document.querySelectorAll('.hero-video');
+  heroVideos.forEach(vid => {
+    vid.play().catch(() => {
       console.warn('Hero video could not autoplay — poster image is shown instead.');
     });
-    heroVideo.addEventListener('error', () => {
+    vid.addEventListener('error', () => {
       console.warn('Hero video failed to load — showing poster/gradient fallback.');
     });
-  }
+  });
 
   /* ---------- 4. Transformation videos: play once when in view ---------- */
   const transformVideos = document.querySelectorAll('.loop-video');

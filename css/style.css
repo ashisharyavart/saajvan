@@ -208,6 +208,8 @@ section{position:relative;}
   object-fit:cover;
   background:linear-gradient(180deg,#dfd6c4,#cdbfa4);
 }
+.hero-video-desktop{ display:block; }
+.hero-video-mobile{ display:none; }
 .hero-video-scrim{
   position:absolute; inset:0;
   background:linear-gradient(180deg, rgba(23,19,15,.35) 0%, rgba(23,19,15,.12) 38%, rgba(23,19,15,.5) 100%);
@@ -669,6 +671,8 @@ section{position:relative;}
 }
 
 @media (max-width:760px){
+  .hero-video-desktop{ display:none; }
+  .hero-video-mobile{ display:block; }
   .site-header{padding:14px 20px;}
   .main-nav{
     position:absolute; top:100%; left:0; right:0;
