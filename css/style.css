@@ -23,6 +23,7 @@
   /* ---- type ---- */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-heading: 'Brittany Signature', cursive;
+  --font-lora: 'Lora', Georgia, serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* ---- misc ---- */
@@ -399,9 +400,11 @@ section{position:relative;}
 }
 .service-list li{
   position:relative;
-  padding-left:20px;
-  margin-bottom:12px;
-  font-size:15px;
+  padding-left:22px;
+  margin-bottom:14px;
+  font-family:var(--font-lora);
+  font-size:18px;
+  line-height:1.75;
   color:var(--ink-soft);
 }
 .service-list li::before{
@@ -538,7 +541,7 @@ section{position:relative;}
 }
 .about-us-desc{
   font-family:var(--font-display);
-  font-size:16px;
+  font-size:19.5px;
   font-weight:400;
   font-style:italic;
   line-height:1.8;
@@ -699,6 +702,10 @@ section{position:relative;}
   .header-cta{display:none;}
   .nav-toggle{display:flex;}
   .services{padding:70px 20px 30px;}
+  .service-list li{
+    font-size:15px;
+    line-height:1.6;
+  }
   .service-row-full-left,
   .service-row-full-right{
     margin-left:-20px;
@@ -713,6 +720,10 @@ section{position:relative;}
   .team{padding:70px 20px;}
   .about-us-row{grid-template-columns:1fr; gap:30px; max-width:400px;}
   .about-us-copy{text-align:center;}
+  .about-us-desc{
+    font-size:16px;
+    line-height:1.7;
+  }
   .portfolio-grid{
     grid-template-columns:1fr;
     grid-template-areas:none;
