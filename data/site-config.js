@@ -58,13 +58,10 @@ window.SITE_CONFIG = {
     copyrightName: "SAAJVAN DESIGN STUDIO"
   },
 
-  // Team section — add, remove, or edit entries freely.
+  // About Us section — single founder profile.
   // `photo` should point to a file inside assets/images/.
   team: [
-    { name: "Team Member 1", role: "Principal Architect", photo: "assets/images/team-1.jpg" },
-    { name: "Team Member 2", role: "Interior Design Lead", photo: "assets/images/team-2.jpg" },
-    { name: "Team Member 3", role: "3D Visualization Lead", photo: "assets/images/team-3.jpg" },
-    { name: "Team Member 4", role: "Project Manager", photo: "assets/images/team-4.jpg" }
+    { name: "Advitya Malhotra", role: "Principal Designer & Founder", photo: "assets/images/team-1.jpg" }
   ]
 
 };

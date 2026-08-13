@@ -495,7 +495,7 @@ section{position:relative;}
 .portfolio-card:hover .loop-video{transform:scale(1.06);}
 
 /* ---------------------------------------------------------
-   TEAM
+   ABOUT US
 --------------------------------------------------------- */
 .team{
   background:var(--cream-alt);
@@ -504,12 +504,10 @@ section{position:relative;}
 .team > .eyebrow, .team > .section-title{text-align:center;}
 .team .section-title-center{margin-bottom:60px;}
 
-.team-grid{
-  max-width:var(--container);
+.about-us-single{
+  max-width:420px;
   margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:30px;
+  text-align:center;
 }
 .team-card{text-align:center;}
 .team-photo{
@@ -517,11 +515,14 @@ section{position:relative;}
   overflow:hidden;
   border-radius:var(--radius);
   background:var(--wood);
-  margin-bottom:16px;
+  margin-bottom:20px;
+  max-width:320px;
+  margin-left:auto;
+  margin-right:auto;
 }
 .team-photo img{width:100%; height:100%; object-fit:cover;}
-.team-card h3{font-size:18px; margin-bottom:4px;}
-.team-card p{font-size:13px; color:var(--accent-deep); margin:0;}
+.team-card h3{font-size:22px; margin-bottom:6px;}
+.team-card p{font-size:14px; color:var(--accent-deep); margin:0; letter-spacing:.04em;}
 
 /* ---------------------------------------------------------
    CTA BANNER
@@ -617,9 +618,6 @@ section{position:relative;}
 /* ---------------------------------------------------------
    RESPONSIVE
 --------------------------------------------------------- */
-@media (max-width:1080px){
-  .team-grid{grid-template-columns:repeat(2,1fr);}
-}
 
 @media (max-width:920px){
   .stats-section{padding:80px 24px;}
@@ -689,7 +687,6 @@ section{position:relative;}
   }
   .portfolio{padding:70px 20px;}
   .team{padding:70px 20px;}
-  .team-grid{grid-template-columns:1fr 1fr; gap:20px;}
   .portfolio-grid{
     grid-template-columns:1fr;
     grid-template-areas:none;
@@ -728,7 +725,6 @@ section{position:relative;}
   .hero-copy{
     padding:0 18px;
   }
-  .team-grid{grid-template-columns:1fr; gap:24px;}
   .fab-stack{right:16px; bottom:20px; gap:10px;}
   .fab{width:44px; height:44px;}
   .fab svg{width:20px; height:20px;}
