@@ -766,3 +766,117 @@ section{position:relative;}
   .fab{width:44px; height:44px;}
   .fab svg{width:20px; height:20px;}
 }
+
+/* ---------------------------------------------------------
+   LEGAL PAGES (Privacy Policy, Terms)
+--------------------------------------------------------- */
+.legal-page{
+  padding:100px 32px;
+  background:var(--cream);
+  min-height:70vh;
+}
+.legal-container{
+  max-width:860px;
+  margin:0 auto;
+}
+.legal-title{
+  font-size:clamp(36px, 4.5vw, 54px);
+  margin-bottom:8px;
+}
+.legal-meta{
+  font-size:14px;
+  color:var(--accent-deep);
+  margin-bottom:48px;
+  letter-spacing:.02em;
+}
+.legal-body{
+  display:flex;
+  flex-direction:column;
+  gap:36px;
+}
+.legal-block h2{
+  font-size:22px;
+  margin-bottom:12px;
+  color:var(--ink);
+}
+.legal-block p{
+  font-size:16px;
+  line-height:1.75;
+  color:var(--ink-soft);
+  margin-bottom:12px;
+}
+.legal-block ul{
+  margin:12px 0;
+  padding-left:24px;
+  list-style:disc;
+}
+.legal-block li{
+  font-size:15.5px;
+  line-height:1.7;
+  color:var(--ink-soft);
+  margin-bottom:8px;
+}
+.legal-contact-box{
+  background:var(--cream-alt);
+  padding:24px 30px;
+  border-left:3px solid var(--accent);
+  border-radius:var(--radius);
+  margin-top:16px;
+}
+.legal-contact-box p{
+  margin:4px 0;
+  font-size:15px;
+}
+
+/* ---------------------------------------------------------
+   ERROR PAGES (404, 500)
+--------------------------------------------------------- */
+.error-page{
+  min-height:75vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:100px 24px;
+  background:var(--cream);
+}
+.error-container{
+  max-width:620px;
+  text-align:center;
+}
+.error-code{
+  font-family:var(--font-display);
+  font-size:clamp(90px, 15vw, 160px);
+  font-weight:600;
+  line-height:1;
+  color:var(--accent);
+  display:block;
+  opacity:0.85;
+  margin-bottom:-10px;
+}
+.error-title{
+  font-size:clamp(28px, 4vw, 42px);
+  margin-bottom:16px;
+}
+.error-desc{
+  font-size:16.5px;
+  line-height:1.7;
+  color:var(--ink-soft);
+  margin:0 auto 36px;
+  max-width:500px;
+}
+.error-actions{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.btn-outline{
+  background:transparent;
+  border:1px solid var(--ink);
+  color:var(--ink);
+}
+.btn-outline:hover{
+  background:var(--ink);
+  color:var(--cream);
+}
