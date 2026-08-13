@@ -62,7 +62,7 @@ section{position:relative;}
 --------------------------------------------------------- */
 .eyebrow{
   font-family:var(--font-heading);
-  font-size:clamp(30px, 2.8vw, 42px);
+  font-size:clamp(44px, 4.5vw, 64px);
   font-weight:400;
   letter-spacing:normal;
   text-transform:none;
@@ -231,8 +231,12 @@ section{position:relative;}
 }
 .hero-desc{
   color:#EDE6D8;
-  font-size:16px;
-  max-width:560px;
+  font-family:var(--font-display);
+  font-weight:400;
+  font-style:italic;
+  font-size:17px;
+  line-height:1.7;
+  max-width:640px;
   margin:0 auto 30px;
 }
 

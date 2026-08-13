@@ -33,7 +33,7 @@ window.SITE_CONFIG = {
     eyebrow: "We shape the essence of modern living",
     headingLine1: "SAAJVAN DESIGN",
     headingLine2: "STUDIO",
-    description: "From contemporary residences to sophisticated commercial spaces, we transform ideas into beautifully curated interiors — designed with precision, premium materials, and a commitment to spaces that are both visually stunning and effortlessly functional."
+    description: "Based in Gurugram, Saajvan Design Studio creates bespoke residential and commercial interiors across Gurgaon and Delhi NCR. From luxury home interiors and modern apartments to sophisticated office and commercial spaces, we design functional, elegant environments tailored to your lifestyle, brand, and vision."
   },
 
   // Used in the footer + intro strip
