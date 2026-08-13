@@ -133,11 +133,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   revealTargets.forEach(el => revealObserver.observe(el));
 
-  /* ---------- 3. Hero video: autoplay once, freeze on last frame ---------- */
+  /* ---------- 3. Hero video: allow sound & autoplay ---------- */
   const heroVideos = document.querySelectorAll('.hero-video');
   heroVideos.forEach(vid => {
+    vid.muted = false;
+    vid.volume = 1.0;
     vid.play().catch(() => {
-      console.warn('Hero video could not autoplay — poster image is shown instead.');
+      // If browser blocks unmuted autoplay, fallback to muted play so video starts,
+      // and enable sound on first user interaction (click/touch)
+      vid.muted = true;
+      vid.play().catch(() => {});
+      const enableAudio = () => {
+        vid.muted = false;
+        vid.volume = 1.0;
+        vid.play().catch(() => {});
+        document.removeEventListener('click', enableAudio);
+        document.removeEventListener('touchstart', enableAudio);
+      };
+      document.addEventListener('click', enableAudio, { once: true });
+      document.addEventListener('touchstart', enableAudio, { once: true });
     });
     vid.addEventListener('error', () => {
       console.warn('Hero video failed to load — showing poster/gradient fallback.');
