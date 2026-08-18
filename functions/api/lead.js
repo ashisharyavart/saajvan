@@ -110,31 +110,43 @@ export async function onRequestPost(context) {
       }
     }
 
-    // 5. Notification Email Integration (if Web3Forms / Resend API configured)
-    const notificationEmail = env?.NOTIFICATION_EMAIL || 'z7f0v3@gmail.com';
+    // 5. WhatsApp Notification via Zaptilo.ai
+    const zaptiloToken = env?.ZAPTILO_API_TOKEN;
+    const notifyTo = env?.WHATSAPP_NOTIFY_TO;  // e.g. "919582300708" (no + sign)
 
-    if (env?.WEB3FORMS_ACCESS_KEY) {
+    if (zaptiloToken && notifyTo) {
       try {
-        await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            access_key: env.WEB3FORMS_ACCESS_KEY,
-            subject: `New 3D Design Session Booking — ${name}`,
-            from_name: 'Saajvan Studio Web Lead',
-            to_email: notificationEmail,
-            message: `
-New 3D Design Session Booking Request:
+        const dateStr = new Date(created_at).toLocaleString('en-IN', {
+          timeZone: 'Asia/Kolkata',
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
 
-• Name: ${name}
-• Phone: +91 ${phone}
-• Interested In: ${inquiry_type}
-• Date: ${new Date(created_at).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
-            `
+        const whatsappMessage =
+          `🏠 *New 3D Design Session Booking*\n\n` +
+          `👤 *Name:* ${name}\n` +
+          `📱 *Phone:* +91 ${phone}\n` +
+          `🎯 *Interested In:* ${inquiry_type}\n` +
+          `🕐 *Date:* ${dateStr}\n\n` +
+          `Tap to call: +91 ${phone}`;
+
+        await fetch('https://web.zaptilo.ai/api/send-message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${zaptiloToken}`
+          },
+          body: JSON.stringify({
+            number: notifyTo,
+            message: whatsappMessage,
+            type: 'text'
           })
         });
-      } catch (emailErr) {
-        console.error('Email alert notification error:', emailErr);
+      } catch (waErr) {
+        console.error('Zaptilo WhatsApp notification error:', waErr);
       }
     }
 
