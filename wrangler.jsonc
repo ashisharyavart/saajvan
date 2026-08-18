@@ -1,4 +1,10 @@
 {
     "name": "saajvan",
-    "pages_build_output_dir": "./"
+    "pages_build_output_dir": "./",
+    "kv_namespaces": [
+        {
+            "binding": "LEADS_KV",
+            "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+        }
+    ]
 }
