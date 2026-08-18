@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   statNumbers.forEach(num => statsObserver.observe(num));
 
-  /* ---------- 6. Lead Capture Popup Modal Display & Re-trigger Logic ---------- */
+  /* ---------- 6. 3-Stage Lead Capture Popup Modal State Machine ---------- */
   function initLeadModal() {
     const modalOverlay = document.getElementById('leadModalOverlay');
     const modalClose = document.getElementById('leadModalClose');
@@ -241,20 +241,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!modalOverlay) return;
 
-    // Permanent Submission Check across browser reboots/refreshes
+    // Permanent Submission Check (across browser reboots/refreshes)
     const isPermanentlySubmitted = () => {
       return localStorage.getItem('saajvan_lead_submitted') === 'true';
     };
 
-    // Session Dismissal Check (Max 2 closes per session)
+    // Session Dismissal Check (Max 3 closes per session)
     const isSessionDismissed = () => {
       const count = parseInt(sessionStorage.getItem('lead_close_count') || '0', 10);
-      return count >= 2 || sessionStorage.getItem('lead_session_dismissed') === 'true';
+      return count >= 3 || sessionStorage.getItem('lead_session_dismissed') === 'true';
     };
 
     let timerId = null;
 
+    const clearActiveTimer = () => {
+      if (timerId) {
+        clearTimeout(timerId);
+        timerId = null;
+      }
+    };
+
     const openModal = () => {
+      clearActiveTimer();
       if (isPermanentlySubmitted() || isSessionDismissed()) return;
       modalOverlay.classList.add('is-open');
       modalOverlay.setAttribute('aria-hidden', 'false');
@@ -265,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
       modalOverlay.classList.remove('is-open');
       modalOverlay.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      clearActiveTimer();
 
       if (isPermanentlySubmitted()) return;
 
@@ -273,25 +282,29 @@ document.addEventListener('DOMContentLoaded', () => {
       sessionStorage.setItem('lead_close_count', closeCount.toString());
 
       if (closeCount === 1) {
-        // First close: wait 15 seconds, then show popup a 2nd time
-        if (timerId) clearTimeout(timerId);
+        // Closed Popup #1 -> Start 15-second timer for Popup #2
         timerId = setTimeout(openModal, 15000);
-      } else if (closeCount >= 2) {
-        // Second close: stop showing popup for the remainder of the session
+      } else if (closeCount === 2) {
+        // Closed Popup #2 -> Start 60-second timer for Popup #3
+        timerId = setTimeout(openModal, 60000);
+      } else if (closeCount >= 3) {
+        // Closed Popup #3 -> FINAL ATTEMPT REACHED: Stop for remainder of session
         sessionStorage.setItem('lead_session_dismissed', 'true');
-        if (timerId) clearTimeout(timerId);
       }
     };
 
-    // Initial Trigger Setup
+    // Initial Trigger & Navigation State Check
     if (!isPermanentlySubmitted() && !isSessionDismissed()) {
       const currentCloseCount = parseInt(sessionStorage.getItem('lead_close_count') || '0', 10);
       if (currentCloseCount === 1) {
-        // Visitor navigated after 1 close -> wait 15 seconds
+        // Visitor navigated after closing Popup #1 -> Wait 15 seconds for Popup #2
         timerId = setTimeout(openModal, 15000);
-      } else {
-        // First visit -> wait 7.5 seconds
-        timerId = setTimeout(openModal, 7500);
+      } else if (currentCloseCount === 2) {
+        // Visitor navigated after closing Popup #2 -> Wait 60 seconds for Popup #3
+        timerId = setTimeout(openModal, 60000);
+      } else if (currentCloseCount === 0) {
+        // First visit -> Wait 20 seconds for Popup #1
+        timerId = setTimeout(openModal, 20000);
       }
     }
 
