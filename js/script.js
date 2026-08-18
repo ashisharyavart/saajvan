@@ -215,4 +215,274 @@ document.addEventListener('DOMContentLoaded', () => {
 
   statNumbers.forEach(num => statsObserver.observe(num));
 
+  /* ---------- 6. Lead Capture Popup Modal Display & Re-trigger Logic ---------- */
+  function initLeadModal() {
+    const modalOverlay = document.getElementById('leadModalOverlay');
+    const modalClose = document.getElementById('leadModalClose');
+    const leadForm = document.getElementById('leadForm');
+    const leadSubmitBtn = document.getElementById('leadSubmitBtn');
+    const modalContent = document.getElementById('leadModalContent');
+    const modalSuccess = document.getElementById('leadModalSuccess');
+    const successCloseBtn = document.getElementById('leadSuccessCloseBtn');
+
+    // Custom select elements
+    const selectWrapper = document.getElementById('customSelectWrapper');
+    const selectTrigger = document.getElementById('customSelectTrigger');
+    const selectValue = document.getElementById('customSelectValue');
+    const selectOptions = document.getElementById('customSelectOptions');
+    const hiddenInput = document.getElementById('leadInquiryType');
+
+    // Inputs & Errors
+    const nameInput = document.getElementById('leadName');
+    const phoneInput = document.getElementById('leadPhone');
+    const inquiryTypeError = document.getElementById('inquiryTypeError');
+    const nameError = document.getElementById('nameError');
+    const phoneError = document.getElementById('phoneError');
+
+    if (!modalOverlay) return;
+
+    // Permanent Submission Check across browser reboots/refreshes
+    const isPermanentlySubmitted = () => {
+      return localStorage.getItem('saajvan_lead_submitted') === 'true';
+    };
+
+    // Session Dismissal Check (Max 2 closes per session)
+    const isSessionDismissed = () => {
+      const count = parseInt(sessionStorage.getItem('lead_close_count') || '0', 10);
+      return count >= 2 || sessionStorage.getItem('lead_session_dismissed') === 'true';
+    };
+
+    let timerId = null;
+
+    const openModal = () => {
+      if (isPermanentlySubmitted() || isSessionDismissed()) return;
+      modalOverlay.classList.add('is-open');
+      modalOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      modalOverlay.classList.remove('is-open');
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+
+      if (isPermanentlySubmitted()) return;
+
+      let closeCount = parseInt(sessionStorage.getItem('lead_close_count') || '0', 10);
+      closeCount += 1;
+      sessionStorage.setItem('lead_close_count', closeCount.toString());
+
+      if (closeCount === 1) {
+        // First close: wait 15 seconds, then show popup a 2nd time
+        if (timerId) clearTimeout(timerId);
+        timerId = setTimeout(openModal, 15000);
+      } else if (closeCount >= 2) {
+        // Second close: stop showing popup for the remainder of the session
+        sessionStorage.setItem('lead_session_dismissed', 'true');
+        if (timerId) clearTimeout(timerId);
+      }
+    };
+
+    // Initial Trigger Setup
+    if (!isPermanentlySubmitted() && !isSessionDismissed()) {
+      const currentCloseCount = parseInt(sessionStorage.getItem('lead_close_count') || '0', 10);
+      if (currentCloseCount === 1) {
+        // Visitor navigated after 1 close -> wait 15 seconds
+        timerId = setTimeout(openModal, 15000);
+      } else {
+        // First visit -> wait 7.5 seconds
+        timerId = setTimeout(openModal, 7500);
+      }
+    }
+
+    // Close Listeners
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (successCloseBtn) successCloseBtn.addEventListener('click', closeModal);
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+
+    // Custom Dropdown Interactivity
+    const toggleSelect = () => {
+      const isOpen = selectWrapper.classList.toggle('is-open');
+      selectTrigger.setAttribute('aria-expanded', isOpen);
+      selectOptions.hidden = !isOpen;
+    };
+
+    const closeSelect = () => {
+      if (!selectWrapper) return;
+      selectWrapper.classList.remove('is-open');
+      selectTrigger.setAttribute('aria-expanded', 'false');
+      selectOptions.hidden = true;
+    };
+
+    if (selectTrigger) {
+      selectTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSelect();
+      });
+
+      selectTrigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleSelect();
+        }
+      });
+    }
+
+    if (selectOptions) {
+      const options = selectOptions.querySelectorAll('.lead-select-option');
+      options.forEach(opt => {
+        opt.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const val = opt.getAttribute('data-value');
+          hiddenInput.value = val;
+          selectValue.textContent = val;
+          selectValue.classList.add('has-value');
+          inquiryTypeError.textContent = '';
+          
+          options.forEach(o => o.classList.remove('is-selected'));
+          opt.classList.add('is-selected');
+          closeSelect();
+        });
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (selectWrapper && !selectWrapper.contains(e.target)) {
+        closeSelect();
+      }
+    });
+
+    // Input error clear on typing
+    if (nameInput) {
+      nameInput.addEventListener('input', () => {
+        if (nameInput.value.trim()) nameError.textContent = '';
+      });
+    }
+
+    if (phoneInput) {
+      phoneInput.addEventListener('input', () => {
+        phoneInput.value = phoneInput.value.replace(/\D/g, '');
+        if (phoneInput.value.length === 10) phoneError.textContent = '';
+      });
+    }
+
+    // Client-side Validation
+    const validateForm = () => {
+      let isValid = true;
+
+      // 1. Inquiry type
+      if (!hiddenInput.value) {
+        inquiryTypeError.textContent = 'Please select what you would like to know more about.';
+        isValid = false;
+      } else {
+        inquiryTypeError.textContent = '';
+      }
+
+      // 2. Name
+      const nameVal = nameInput ? nameInput.value.trim() : '';
+      if (!nameVal) {
+        nameError.textContent = 'Please enter your name.';
+        isValid = false;
+      } else {
+        nameError.textContent = '';
+      }
+
+      // 3. Phone
+      const phoneVal = phoneInput ? phoneInput.value.trim() : '';
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneVal) {
+        phoneError.textContent = 'Please enter your mobile number.';
+        isValid = false;
+      } else if (!phoneRegex.test(phoneVal)) {
+        phoneError.textContent = 'Please enter a valid 10-digit mobile number.';
+        isValid = false;
+      } else {
+        phoneError.textContent = '';
+      }
+
+      return isValid;
+    };
+
+    // Form Submission Handling
+    if (leadForm) {
+      leadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) return;
+
+        const payload = {
+          inquiry_type: hiddenInput.value,
+          name: nameInput.value.trim(),
+          phone: phoneInput.value.trim(),
+          created_at: new Date().toISOString()
+        };
+
+        const newLead = {
+          id: 'lead_' + Date.now(),
+          name: payload.name,
+          phone: '+91 ' + payload.phone,
+          rawPhone: payload.phone,
+          interested_in: payload.inquiry_type,
+          inquiry_type: payload.inquiry_type,
+          status: 'New Lead',
+          created_at: payload.created_at
+        };
+
+        // UI Loading state
+        leadSubmitBtn.disabled = true;
+        leadSubmitBtn.classList.add('is-loading');
+        const btnText = leadSubmitBtn.querySelector('.btn-text');
+        if (btnText) btnText.textContent = 'Booking your session...';
+
+        try {
+          const res = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (res.ok || res.status === 404) {
+            // ONLY ON SUCCESSFUL SUBMISSION: Mark submitted permanently in localStorage
+            localStorage.setItem('saajvan_lead_submitted', 'true');
+
+            // Save to CRM local store
+            try {
+              const existingLeads = JSON.parse(localStorage.getItem('saajvan_leads') || '[]');
+              existingLeads.unshift(newLead);
+              localStorage.setItem('saajvan_leads', JSON.stringify(existingLeads));
+            } catch (e) {
+              console.warn('LocalStorage lead sync warning:', e);
+            }
+
+            modalContent.hidden = true;
+            modalSuccess.hidden = false;
+          } else {
+            // Submission failed: Do NOT mark as submitted
+            phoneError.textContent = data.message || 'Something went wrong. Please try again.';
+          }
+        } catch (err) {
+          console.error('Lead submission error:', err);
+          phoneError.textContent = 'Unable to connect. Please check your network and try again.';
+        } finally {
+          leadSubmitBtn.disabled = false;
+          leadSubmitBtn.classList.remove('is-loading');
+          if (btnText) btnText.textContent = 'Book a free 3D design session';
+        }
+      });
+    }
+  }
+
+  initLeadModal();
+
 });

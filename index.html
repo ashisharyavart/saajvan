@@ -325,6 +325,82 @@
     </a>
   </div>
 
+  <!-- ============ 15-SEC LEAD CAPTURE POPUP MODAL ============ -->
+  <div class="lead-modal-overlay" id="leadModalOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
+    <div class="lead-modal-card" id="leadModalCard">
+      <button type="button" class="lead-modal-close" id="leadModalClose" aria-label="Close popup">&times;</button>
+      
+      <!-- FORM STATE -->
+      <div class="lead-modal-content" id="leadModalContent">
+        <h2 class="lead-modal-title" id="leadModalTitle">Let's design your dream space</h2>
+        
+        <form id="leadForm" novalidate>
+          <!-- 1. Dropdown Question -->
+          <div class="lead-field-group">
+            <div class="lead-custom-select-wrapper" id="customSelectWrapper">
+              <div class="lead-custom-select-trigger" id="customSelectTrigger" tabindex="0" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-label="What would you like to know more about?">
+                <span class="lead-select-value" id="customSelectValue">What would you like to know more about?</span>
+                <svg class="lead-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <ul class="lead-custom-select-options" id="customSelectOptions" role="listbox" hidden>
+                <li class="lead-select-option" data-value="Interior Design Services" role="option">Interior Design Services</li>
+                <li class="lead-select-option" data-value="Residential Interiors" role="option">Residential Interiors</li>
+                <li class="lead-select-option" data-value="Commercial Interiors" role="option">Commercial Interiors</li>
+                <li class="lead-select-option" data-value="Renovation / Remodeling" role="option">Renovation / Remodeling</li>
+                <li class="lead-select-option" data-value="Project Pricing" role="option">Project Pricing</li>
+                <li class="lead-select-option" data-value="Project Timeline" role="option">Project Timeline</li>
+                <li class="lead-select-option" data-value="Something Else" role="option">Something Else</li>
+              </ul>
+            </div>
+            <input type="hidden" id="leadInquiryType" name="inquiry_type" required>
+            <div class="lead-field-error" id="inquiryTypeError"></div>
+          </div>
+
+          <!-- 2. Name Field -->
+          <div class="lead-field-group">
+            <input type="text" id="leadName" name="name" class="lead-input" placeholder="Enter your name" required autocomplete="name">
+            <div class="lead-field-error" id="nameError"></div>
+          </div>
+
+          <!-- 3. Phone Number Field -->
+          <div class="lead-field-group">
+            <div class="lead-phone-input-wrap">
+              <span class="lead-country-code" title="India (+91)">🇮🇳 +91</span>
+              <input type="tel" id="leadPhone" name="phone" class="lead-input lead-phone-input" placeholder="Enter your mobile number" required autocomplete="tel" maxlength="10">
+            </div>
+            <div class="lead-field-error" id="phoneError"></div>
+          </div>
+
+          <!-- 4. CTA Button -->
+          <button type="submit" class="btn btn-lead-submit" id="leadSubmitBtn">
+            <span class="btn-text">Book a free 3D design session</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+
+          <!-- 5. Privacy / Terms Disclaimer -->
+          <p class="lead-disclaimer">
+            By submitting, you agree to our <a href="privacy-policy.html" target="_blank">privacy policy</a> and <a href="terms.html" target="_blank">terms of use</a>, allowing us to use your information as outlined.
+          </p>
+        </form>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="lead-modal-success" id="leadModalSuccess" hidden>
+        <div class="lead-success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h3 class="lead-success-title">Thank you!</h3>
+        <p class="lead-success-desc">We've received your request. Our team will get in touch with you shortly to schedule your free 3D design session.</p>
+        <button type="button" class="btn btn-dark lead-success-close-btn" id="leadSuccessCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script src="js/script.js"></script>
 </body>
 
