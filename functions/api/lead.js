@@ -80,7 +80,16 @@ export async function onRequestPost(context) {
       created_at: created_at
     };
 
-    // 4. Supabase CRM Database Integration (if configured via env)
+    // 3.5. Cloudflare KV Persistence (if LEADS_KV namespace is bound in Cloudflare dashboard)
+    if (env?.LEADS_KV) {
+      try {
+        const existing = (await env.LEADS_KV.get('saajvan_leads_list', { type: 'json' })) || [];
+        existing.unshift(crmPayload);
+        await env.LEADS_KV.put('saajvan_leads_list', JSON.stringify(existing));
+      } catch (kvErr) {
+        console.error('Cloudflare KV lead save error:', kvErr);
+      }
+    }
     const supabaseUrl = env?.SUPABASE_URL;
     const supabaseKey = env?.SUPABASE_KEY || env?.SUPABASE_SERVICE_ROLE_KEY;
 

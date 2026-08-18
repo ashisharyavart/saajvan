@@ -23,6 +23,19 @@ export async function onRequestGet(context) {
     'Content-Type': 'application/json',
   };
 
+  // 1. Check Cloudflare KV if bound
+  if (env?.LEADS_KV) {
+    try {
+      const data = await env.LEADS_KV.get('saajvan_leads_list', { type: 'json' });
+      if (Array.isArray(data)) {
+        return new Response(JSON.stringify(data), { status: 200, headers: corsHeaders });
+      }
+    } catch (e) {
+      console.error('KV get error:', e);
+    }
+  }
+
+  // 2. Check Supabase
   const supabaseUrl = env?.SUPABASE_URL;
   const supabaseKey = env?.SUPABASE_KEY || env?.SUPABASE_SERVICE_ROLE_KEY;
 

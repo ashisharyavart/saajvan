@@ -300,6 +300,12 @@
       .replace(/"/g, '&quot;');
   }
 
+  // Auto-refresh when tab gains focus or localStorage updates
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'saajvan_leads') loadLeads();
+  });
+  window.addEventListener('focus', loadLeads);
+
   // Initialize
   checkAuth();
 
