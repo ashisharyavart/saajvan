@@ -133,7 +133,7 @@ export async function onRequestPost(context) {
           `🕐 *Date:* ${dateStr}\n\n` +
           `Tap to call: +91 ${phone}`;
 
-        const zapRes = await fetch('https://api.zaptilo.ai/api/send', {
+        const zapRes = await fetch('https://web.zaptilo.ai/api/send', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
