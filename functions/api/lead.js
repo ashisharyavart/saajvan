@@ -140,7 +140,7 @@ export async function onRequestPost(context) {
             'Authorization': `Bearer ${zaptiloToken}`
           },
           body: JSON.stringify({
-            number: notifyTo,
+            phone: notifyTo,
             message: whatsappMessage
           })
         });
