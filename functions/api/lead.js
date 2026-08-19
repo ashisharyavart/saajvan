@@ -133,7 +133,7 @@ export async function onRequestPost(context) {
           `🕐 *Date:* ${dateStr}\n\n` +
           `Tap to call: +91 ${phone}`;
 
-        await fetch('https://web.zaptilo.ai/api/send-message', {
+        await fetch('https://api.zaptilo.ai/api/send', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -141,8 +141,7 @@ export async function onRequestPost(context) {
           },
           body: JSON.stringify({
             number: notifyTo,
-            message: whatsappMessage,
-            type: 'text'
+            message: whatsappMessage
           })
         });
       } catch (waErr) {
