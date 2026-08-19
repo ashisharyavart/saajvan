@@ -112,7 +112,7 @@ export async function onRequestPost(context) {
 
     // 5. WhatsApp Notification via Zaptilo.ai (Supports single or multiple comma-separated numbers)
     const zaptiloToken = env?.ZAPTILO_API_TOKEN;
-    const notifyToRaw = env?.WHATSAPP_NOTIFY_TO; // e.g. "916263952434,919876543210"
+    const notifyToRaw = env?.WHATSAPP_NOTIFY_TO; // e.g. "916263952434,919582300708"
 
     if (zaptiloToken && notifyToRaw) {
       try {
@@ -133,7 +133,7 @@ export async function onRequestPost(context) {
           `🕐 *Date:* ${dateStr}\n\n` +
           `Tap to call: +91 ${phone}`;
 
-        // Support multiple comma-separated numbers in WHATSAPP_NOTIFY_TO
+        // Parse comma-separated phone numbers
         const recipientNumbers = notifyToRaw
           .split(',')
           .map(num => num.replace(/\D/g, '').trim())
