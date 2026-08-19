@@ -58,3 +58,62 @@ export async function onRequestGet(context) {
 
   return new Response(JSON.stringify([]), { status: 200, headers: corsHeaders });
 }
+
+export async function onRequestPost(context) {
+  const { request, env } = context;
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    const updatedLeads = await request.json();
+    if (!Array.isArray(updatedLeads)) {
+      return new Response(
+        JSON.stringify({ success: false, message: 'Payload must be an array of leads.' }),
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    // 1. Sync to Cloudflare KV if available
+    if (env?.LEADS_KV) {
+      await env.LEADS_KV.put('saajvan_leads_list', JSON.stringify(updatedLeads));
+    }
+
+    return new Response(
+      JSON.stringify({ success: true, message: 'Leads database updated successfully.' }),
+      { status: 200, headers: corsHeaders }
+    );
+  } catch (err) {
+    console.error('Save leads error:', err);
+    return new Response(
+      JSON.stringify({ success: false, message: 'Failed to update leads database.' }),
+      { status: 500, headers: corsHeaders }
+    );
+  }
+}
+
+export async function onRequestDelete(context) {
+  const { env } = context;
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    if (env?.LEADS_KV) {
+      await env.LEADS_KV.put('saajvan_leads_list', JSON.stringify([]));
+    }
+
+    return new Response(
+      JSON.stringify({ success: true, message: 'All leads cleared successfully.' }),
+      { status: 200, headers: corsHeaders }
+    );
+  } catch (err) {
+    console.error('Clear leads error:', err);
+    return new Response(
+      JSON.stringify({ success: false, message: 'Failed to clear leads.' }),
+      { status: 500, headers: corsHeaders }
+    );
+  }
+}

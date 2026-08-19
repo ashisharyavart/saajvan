@@ -3,7 +3,7 @@
    ========================================================= */
 
 (function () {
-  const CORRECT_PIN = '1234';
+  const CORRECT_PIN = '6565';
 
   // Elements
   const lockScreen = document.getElementById('crmLockScreen');
@@ -51,7 +51,7 @@
       pinError.textContent = '';
       loadLeads();
     } else {
-      pinError.textContent = 'Incorrect PIN passcode. Try 1234.';
+      pinError.textContent = 'Incorrect PIN passcode.';
       pinInput.value = '';
     }
   };
@@ -88,42 +88,54 @@
 
   /* ---------- 3. Load Leads ---------- */
   const loadLeads = async () => {
-    // 1. Get local storage leads
-    try {
-      const localData = JSON.parse(localStorage.getItem('saajvan_leads') || '[]');
-      leads = Array.isArray(localData) ? localData : [];
-    } catch (e) {
-      leads = [];
-    }
-
-    // 2. Fetch remote API leads if available
+    // 1. Fetch remote API leads if available
     try {
       const res = await fetch('/api/leads');
       if (res.ok) {
         const remoteLeads = await res.json();
-        if (Array.isArray(remoteLeads) && remoteLeads.length > 0) {
-          // Merge unique leads by id/phone+timestamp
-          const merged = [...remoteLeads];
-          leads.forEach(l => {
-            if (!merged.some(m => m.id === l.id || (m.rawPhone === l.rawPhone && m.created_at === l.created_at))) {
-              merged.push(l);
-            }
-          });
-          leads = merged;
+        if (Array.isArray(remoteLeads)) {
+          leads = remoteLeads.map((l, idx) => ({
+            ...l,
+            uid: l.id || l.uid || `lead_${idx}_${Date.now()}`
+          }));
           localStorage.setItem('saajvan_leads', JSON.stringify(leads));
+          renderDashboard();
+          return;
         }
       }
     } catch (err) {
       // Offline / Static mode fallback
     }
 
+    // 2. Fallback to local storage
+    try {
+      const localData = JSON.parse(localStorage.getItem('saajvan_leads') || '[]');
+      leads = (Array.isArray(localData) ? localData : []).map((l, idx) => ({
+        ...l,
+        uid: l.id || l.uid || `lead_${idx}_${Date.now()}`
+      }));
+    } catch (e) {
+      leads = [];
+    }
+
     renderDashboard();
   };
 
   /* ---------- 4. Save & Sync Leads ---------- */
-  const saveLeads = () => {
+  const saveLeads = async () => {
     localStorage.setItem('saajvan_leads', JSON.stringify(leads));
     renderDashboard();
+
+    // Sync updated leads list to Cloudflare KV backend
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leads)
+      });
+    } catch (err) {
+      console.error('KV Sync Error:', err);
+    }
   };
 
   /* ---------- 5. Render Metrics & Table ---------- */
@@ -169,8 +181,9 @@
 
     emptyState.hidden = true;
 
-    filtered.forEach(lead => {
+    filtered.forEach((lead, idx) => {
       const tr = document.createElement('tr');
+      const leadKey = lead.uid || lead.id || `lead_${idx}`;
 
       const dateStr = lead.created_at
         ? new Date(lead.created_at).toLocaleString('en-IN', {
@@ -208,7 +221,7 @@
         </td>
         <td><span class="status-badge status-contacted">${escapeHtml(interestedIn)}</span></td>
         <td>
-          <select class="status-select" data-id="${lead.id || dateStr}">
+          <select class="status-select" data-key="${leadKey}">
             <option value="New Lead" ${currentStatus === 'New Lead' ? 'selected' : ''}>🔴 New Lead</option>
             <option value="Contacted" ${currentStatus === 'Contacted' ? 'selected' : ''}>🟡 Contacted</option>
             <option value="Session Booked" ${currentStatus === 'Session Booked' ? 'selected' : ''}>🟢 Session Booked</option>
@@ -216,7 +229,7 @@
           </select>
         </td>
         <td>
-          <button type="button" class="btn-danger-outline btn-delete-lead" data-id="${lead.id || dateStr}" style="height:32px; padding:0 10px; font-size:12px;">Delete</button>
+          <button type="button" class="btn-danger-outline btn-delete-lead" data-key="${leadKey}" style="height:32px; padding:0 10px; font-size:12px;">Delete</button>
         </td>
       `;
 
@@ -224,7 +237,8 @@
       const statusSel = tr.querySelector('.status-select');
       if (statusSel) {
         statusSel.addEventListener('change', (e) => {
-          const targetLead = leads.find(l => (l.id || l.created_at) === (lead.id || lead.created_at));
+          const targetKey = e.target.getAttribute('data-key');
+          const targetLead = leads.find(l => (l.uid || l.id) === targetKey);
           if (targetLead) {
             targetLead.status = e.target.value;
             saveLeads();
@@ -236,8 +250,9 @@
       const deleteBtn = tr.querySelector('.btn-delete-lead');
       if (deleteBtn) {
         deleteBtn.addEventListener('click', () => {
+          const targetKey = deleteBtn.getAttribute('data-key');
           if (confirm(`Are you sure you want to delete lead "${lead.name}"?`)) {
-            leads = leads.filter(l => (l.id || l.created_at) !== (lead.id || lead.created_at));
+            leads = leads.filter(l => (l.uid || l.id) !== targetKey);
             saveLeads();
           }
         });
@@ -277,11 +292,17 @@
 
   /* ---------- 7. Clear All Leads ---------- */
   if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
+    clearBtn.addEventListener('click', async () => {
       if (leads.length === 0) return;
       if (confirm('Are you sure you want to delete ALL leads from the database? This action cannot be undone.')) {
         leads = [];
-        saveLeads();
+        localStorage.setItem('saajvan_leads', JSON.stringify([]));
+        renderDashboard();
+        try {
+          await fetch('/api/leads', { method: 'DELETE' });
+        } catch (err) {
+          console.error('Clear All Error:', err);
+        }
       }
     });
   }
