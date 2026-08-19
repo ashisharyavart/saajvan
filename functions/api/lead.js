@@ -133,7 +133,7 @@ export async function onRequestPost(context) {
           `🕐 *Date:* ${dateStr}\n\n` +
           `Tap to call: +91 ${phone}`;
 
-        await fetch('https://api.zaptilo.ai/api/send', {
+        const zapRes = await fetch('https://api.zaptilo.ai/api/send', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -144,6 +144,8 @@ export async function onRequestPost(context) {
             message: whatsappMessage
           })
         });
+        const zapBody = await zapRes.text();
+        console.log(`[Zaptilo] status=${zapRes.status} body=${zapBody}`);
       } catch (waErr) {
         console.error('Zaptilo WhatsApp notification error:', waErr);
       }
