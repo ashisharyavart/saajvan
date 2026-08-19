@@ -110,11 +110,11 @@ export async function onRequestPost(context) {
       }
     }
 
-    // 5. WhatsApp Notification via Zaptilo.ai
+    // 5. WhatsApp Notification via Zaptilo.ai (Supports single or multiple comma-separated numbers)
     const zaptiloToken = env?.ZAPTILO_API_TOKEN;
-    const notifyTo = env?.WHATSAPP_NOTIFY_TO;  // e.g. "919582300708" (no + sign)
+    const notifyToRaw = env?.WHATSAPP_NOTIFY_TO; // e.g. "916263952434,919876543210"
 
-    if (zaptiloToken && notifyTo) {
+    if (zaptiloToken && notifyToRaw) {
       try {
         const dateStr = new Date(created_at).toLocaleString('en-IN', {
           timeZone: 'Asia/Kolkata',
@@ -133,19 +133,31 @@ export async function onRequestPost(context) {
           `🕐 *Date:* ${dateStr}\n\n` +
           `Tap to call: +91 ${phone}`;
 
-        const zapRes = await fetch('https://web.zaptilo.ai/api/send', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${zaptiloToken}`
-          },
-          body: JSON.stringify({
-            phone: notifyTo,
-            message: whatsappMessage
-          })
-        });
-        const zapBody = await zapRes.text();
-        console.log(`[Zaptilo] status=${zapRes.status} body=${zapBody}`);
+        // Support multiple comma-separated numbers in WHATSAPP_NOTIFY_TO
+        const recipientNumbers = notifyToRaw
+          .split(',')
+          .map(num => num.replace(/\D/g, '').trim())
+          .filter(num => num.length >= 10);
+
+        for (const targetNum of recipientNumbers) {
+          try {
+            const zapRes = await fetch('https://web.zaptilo.ai/api/send', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${zaptiloToken}`
+              },
+              body: JSON.stringify({
+                phone: targetNum,
+                message: whatsappMessage
+              })
+            });
+            const zapBody = await zapRes.text();
+            console.log(`[Zaptilo -> ${targetNum}] status=${zapRes.status} body=${zapBody}`);
+          } catch (singleErr) {
+            console.error(`Error sending Zaptilo alert to ${targetNum}:`, singleErr);
+          }
+        }
       } catch (waErr) {
         console.error('Zaptilo WhatsApp notification error:', waErr);
       }
