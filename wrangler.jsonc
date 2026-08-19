@@ -1,6 +1,7 @@
 {
     "name": "saajvan",
     "pages_build_output_dir": "./",
+    "compatibility_flags": ["nodejs_compat"],
     "kv_namespaces": [
         {
             "binding": "LEADS_KV",
