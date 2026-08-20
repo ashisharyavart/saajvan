@@ -12,7 +12,7 @@
   <link href="https://db.onlinewebfonts.com/c/b4d584ed0e53ba94a815f817690faab2?family=Brittany+Signature"
     rel="stylesheet">
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@600;700;800&family=Sacramento&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <!-- All firm-specific info (name, contact, location, team) lives in data/site-config.js -->
@@ -206,40 +206,79 @@
     </article>
   </section>
 
-  <!-- ============ PORTFOLIO ============ -->
-  <section class="portfolio" id="portfolio">
-    <div class="portfolio-head">
-      <div>
-        <p class="eyebrow">Selected work</p>
-        <h2 class="section-title">Portfolio</h2>
+  <!-- ============ PORTFOLIO / PROJECTS SECTION ============ -->
+  <section class="projects-section" id="portfolio">
+    <div class="projects-container">
+      
+      <!-- HEADER -->
+      <div class="projects-header">
+        <p class="projects-eyebrow">Selected work</p>
+        <h2 class="projects-title">Architectural Portfolio</h2>
+        <p class="projects-subtitle">Distinguished residential, commercial &amp; hospitality projects by Saajvan Design Studio</p>
       </div>
-      <p class="portfolio-note">Each project plays once as it comes into view, then settles on the finished space.</p>
-    </div>
 
-    <div class="portfolio-grid">
+      <!-- FILTER TABS -->
+      <div class="projects-filter-bar">
+        <button type="button" class="filter-btn active" data-filter="all">All Projects</button>
+        <button type="button" class="filter-btn" data-filter="Residential">Residential</button>
+        <button type="button" class="filter-btn" data-filter="Commercial">Commercial</button>
+        <button type="button" class="filter-btn" data-filter="Hospitality">Hospitality</button>
+      </div>
 
-      <a class="portfolio-card card-kitchen" href="#contact">
-        <img src="assets/images/portfolio-kitchen.jpg" alt="Kitchen Architecture">
-        <div class="portfolio-card-title">KITCHEN</div>
-      </a>
-
-      <a class="portfolio-card card-dining" href="#contact">
-        <img src="assets/images/portfolio-bathroom.jpg" alt="Bathroom Design">
-        <div class="portfolio-card-title">BATHROOM</div>
-      </a>
-
-      <a class="portfolio-card card-bedroom" href="#contact">
-        <img src="assets/images/portfolio-bedroom.png" alt="Bedroom Suite">
-        <div class="portfolio-card-title">BEDROOM</div>
-      </a>
-
-      <a class="portfolio-card card-living" href="#contact">
-        <img src="assets/images/portfolio-living.png" alt="Living Room">
-        <div class="portfolio-card-title">LIVING</div>
-      </a>
+      <!-- PROJECTS GRID -->
+      <div class="projects-grid" id="projectsGrid">
+        <!-- Rendered dynamically from JS projects array -->
+      </div>
 
     </div>
   </section>
+
+  <!-- ============ PROJECT DETAIL PAGE / MODAL ============ -->
+  <div class="project-modal" id="projectModal" role="dialog" aria-hidden="true">
+    <div class="modal-close-bar">
+      <button type="button" class="modal-back-btn" id="modalBackBtn">
+        ← Back to Portfolio
+      </button>
+      <span style="font-family: var(--font-cormorant); font-size:13px; text-transform:uppercase; letter-spacing:0.15em; color:var(--ink-soft);">
+        Saajvan Design Studio Case Study
+      </span>
+    </div>
+
+    <!-- HERO -->
+    <div class="modal-hero" id="modalHero">
+      <div class="modal-hero-content">
+        <div class="modal-hero-cat" id="modalHeroCat">Residential</div>
+        <h1 class="modal-hero-title" id="modalHeroTitle">Project Title</h1>
+      </div>
+    </div>
+
+    <!-- BODY CONTENT -->
+    <div class="modal-body">
+      <div class="modal-story-title">Project Narrative</div>
+      <div class="modal-story-p" id="modalStory">Project story text...</div>
+
+      <!-- PHOTO GALLERY -->
+      <div class="gallery-title">Architecture &amp; Interior Gallery</div>
+      <div class="gallery-grid" id="modalGallery">
+        <!-- Lightbox items -->
+      </div>
+
+      <!-- JOURNAL / SEO ARTICLE -->
+      <div class="journal-section">
+        <p class="journal-eyebrow">Architectural Journal</p>
+        <h2 class="journal-h2" id="journalTitle">Design Study</h2>
+        <div class="journal-article" id="journalArticle">
+          <!-- Article HTML -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX ENLARGE MODAL -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <div class="lightbox-content" id="lightboxContent"></div>
+  </div>
 
   <!-- ============ ABOUT US ============ -->
   <section class="team" id="team">

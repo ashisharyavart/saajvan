@@ -215,6 +215,232 @@ document.addEventListener('DOMContentLoaded', () => {
 
   statNumbers.forEach(num => statsObserver.observe(num));
 
+  /* ---------- 5.5 Architectural Projects & Portfolio Controller ---------- */
+  function initProjectsSection() {
+    const SAAJVAN_PROJECTS = [
+      {
+        id: "the-hollow-loft",
+        title: "The Hollow Loft",
+        category: "Residential",
+        shortDesc: "A converted industrial warehouse loft blending exposed timber with refined architectural minimal finishes.",
+        story: "Situated within a century-old industrial brick building, The Hollow Loft transforms raw structural concrete and weathered timber joists into a serene, light-filled private residence. High ceilings and custom steel-framed glass partitions establish distinct living zones while preserving sweeping spatial transparency.",
+        colorHex: "#3E3730",
+        labelSvg: "THE HOLLOW LOFT — CONVERTED LOFT RESIDENCE",
+        galleryLabels: ["Loft Living Space & High Ceilings", "Custom Timber & Steel Partition", "Minimalist Kitchen & Raw Stone"],
+        journalTitle: "Design Study: Transforming Industrial Heritage into Warm Residential Luxury",
+        articleHtml: `
+          <h3>Spatial Architecture &amp; Light Flow</h3>
+          <p>Converting industrial volumes into intimate residential sanctuaries demands delicate balance between raw structural preservation and soft tactile comfort. In The Hollow Loft project, Saajvan Design Studio prioritized natural light penetration through multi-pane arched windows, utilizing warm terracotta and smoked oak to soften double-height brick surfaces.</p>
+          <div class="journal-quote">"True architectural luxury relies not on modern ornamentation, but on honoring authentic structural texture through deliberate spatial restraint."</div>
+          <h3>Materiality &amp; Custom Millwork</h3>
+          <p>Custom cabinetry in stained walnut bridges the open kitchen and living area, concealing functional storage behind sleek, handleless panels. The kitchen island—crafted from solid hand-fluted travertine—anchors the central entertaining area.</p>
+        `
+      },
+      {
+        id: "chalkhill-townhouse",
+        title: "Chalkhill Townhouse",
+        category: "Residential",
+        shortDesc: "Comprehensive heritage townhouse renovation honoring classical molding alongside bespoke modern brass detailing.",
+        story: "A multi-story heritage residence restored with architectural reverence. Chalkhill Townhouse marries restored Victorian crown moldings and marble mantels with bespoke contemporary brass lighting, sculptural Italian seating, and custom oak chevron flooring.",
+        colorHex: "#484136",
+        labelSvg: "CHALKHILL TOWNHOUSE — HERITAGE RENOVATION",
+        galleryLabels: ["Formal Living Room & Molding", "Bespoke Brass & Oak Kitchen", "Master Suite & Marble Bath"],
+        journalTitle: "Restoration & Modernity: Harmonizing Victorian Details with Contemporary Living",
+        articleHtml: `
+          <h3>Preserving Architectural Heritage</h3>
+          <p>Historical townhouse renovations require precision engineering to integrate modern HVAC and home automation without disrupting 19th-century plasterwork. Saajvan Design Studio collaborated with heritage craftsmen to restore original cornice detailing while carving hidden utility chases into solid masonry walls.</p>
+          <div class="journal-quote">"When classic architectural heritage meets contemporary spatial planning, timeless residential harmony is born."</div>
+          <h3>Material Palette &amp; Lighting Strategy</h3>
+          <p>Soft cream lime wash walls and deep brass accent fixtures bounce warm evening light across rich herringbone floorboards.</p>
+        `
+      },
+      {
+        id: "amara-showroom",
+        title: "Amara Showroom",
+        category: "Commercial",
+        shortDesc: "A flagship gallery and interactive experience center designed for a premier luxury architectural surfaces brand.",
+        story: "Designed as an immersive monolithic sculpture, Amara Showroom showcases high-end porcelain and natural stone surfaces through gallery-style architectural pods. Visitors experience materials in natural and controlled lighting conditions across dynamic spatial walkthroughs.",
+        colorHex: "#2E3B34",
+        labelSvg: "AMARA SHOWROOM — COMMERCIAL GALLERY",
+        galleryLabels: ["Monolithic Surface Pods", "Natural Light Exhibition Corridor", "Private Client Lounge & Consultation"],
+        journalTitle: "Commercial Spatial Strategy: Creating Immersive Retail Experiences",
+        articleHtml: `
+          <h3>Architecture as Product Showcase</h3>
+          <p>Traditional surface retail relies on static tile racks. Saajvan Design Studio re-imagined the retail environment as a series of walkable architectural pavilions, allowing architects and interior designers to perceive scale, light reflection, and tactile texture in true-to-life environments.</p>
+          <div class="journal-quote">"Commercial design should elevate products into works of art, creating emotional connection between customer and material."</div>
+        `
+      },
+      {
+        id: "birch-bay-cafe",
+        title: "Birch & Bay Café",
+        category: "Hospitality",
+        shortDesc: "An organic neighbourhood bistro featuring curved terracotta bar counters, tactile plaster, and warm rattan.",
+        story: "Birch & Bay Café brings Scandinavian warmth and Mediterranean craft together. Featuring a hand-rendered Venetian plaster facade, custom curved terracotta espresso bar, and intimate banquette seating tucked under warm timber alcoves.",
+        colorHex: "#543C2E",
+        labelSvg: "BIRCH & BAY CAFÉ — HOSPITALITY INTERIOR",
+        galleryLabels: ["Curved Terracotta Espresso Bar", "Custom Wood & Linen Banquettes", "Sunlit Outdoor Courtyard Dining"],
+        journalTitle: "Hospitality Concept Design: Crafting Tactile & Social Neighbourhood Dining Spaces",
+        articleHtml: `
+          <h3>Flow, Operations &amp; Customer Journey</h3>
+          <p>Successful cafe architecture optimizes high-speed morning take-away circulation without disrupting afternoon seated diners. Saajvan Design Studio engineered a dual-flow entrance pathway anchored by a central curved bar unit.</p>
+          <div class="journal-quote">"Hospitality spaces thrive when acoustic comfort, tactile natural materials, and seamless service flow converge."</div>
+        `
+      },
+      {
+        id: "pinecrest-retreat",
+        title: "Pinecrest Retreat",
+        category: "Hospitality",
+        shortDesc: "A secluded mountain eco-resort villa integrating floor-to-ceiling glass, charred cedar cladding, and stone fireplaces.",
+        story: "Perched high amidst a dense pine forest, Pinecrest Retreat offers guests immersive connection with surrounding nature. Charred Shou Sugi Ban timber siding and expansive panoramic glazing framing untouched mountain landscapes.",
+        colorHex: "#394336",
+        labelSvg: "PINECREST RETREAT — LUXURY MOUNTAIN RESORT",
+        galleryLabels: ["Panoramic Mountain Lounge", "Charred Timber & Stone Exterior", "Minimal Spa Bathroom & Fireplace"],
+        journalTitle: "Biophilic Architecture: Integrating Mountain Ecosystems into Luxury Hospitality",
+        articleHtml: `
+          <h3>Site Integration &amp; Low-Impact Construction</h3>
+          <p>Nestled onto a steep slope, Pinecrest Retreat minimizes ground disruption through elevated steel pier foundations. The exterior envelope features locally sourced cedar charred using ancient Shou Sugi Ban techniques for natural weather resistance.</p>
+          <div class="journal-quote">"Biophilic design connects human wellness with forest topography through unobstructed visual frames and natural materials."</div>
+        `
+      },
+      {
+        id: "verge-fitness-studio",
+        title: "Verge Fitness Studio",
+        category: "Commercial",
+        shortDesc: "A high-performance boutique fitness & movement sanctuary defined by ambient linear lighting and micro-cement walls.",
+        story: "Verge Fitness Studio redefines boutique athletic spaces through moody architectural elegance. Smoked mirror reflections, warm linear LED lighting bands, micro-cement flooring, and acoustic timber ceiling ribbons.",
+        colorHex: "#2C2E33",
+        labelSvg: "VERGE FITNESS STUDIO — BOUTIQUE ATHLETIC SPACE",
+        galleryLabels: ["Movement Studio & Ambient LEDs", "Custom Recovery Bar & Reception", "Luxury Locker Rooms & Rain Showers"],
+        journalTitle: "Architectural Atmosphere in Athletic Wellness: Sensory & Acoustic Design",
+        articleHtml: `
+          <h3>Atmospheric Lighting &amp; Motivation</h3>
+          <p>Diverging from harsh traditional gym fluorescents, Verge Fitness Studio utilizes indirect perimeter LED channels that transition dynamically in color temperature—from energizing morning daylight to calming evening amber tones.</p>
+          <div class="journal-quote">"Athletic architecture should inspire physical focus through sensory lighting, clean air flow, and acoustic rhythm."</div>
+        `
+      }
+    ];
+
+    const projectsGrid = document.getElementById('projectsGrid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectModal = document.getElementById('projectModal');
+    const modalBackBtn = document.getElementById('modalBackBtn');
+    const lightboxModal = document.getElementById('lightboxModal');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxContent = document.getElementById('lightboxContent');
+
+    if (!projectsGrid) return;
+
+    function generatePlaceholderSvg(title, category, colorHex) {
+      const svgString = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" preserveAspectRatio="none">
+          <rect width="800" height="600" fill="${colorHex}"/>
+          <pattern id="grid_${Math.random().toString(36).substr(2, 5)}" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          </pattern>
+          <rect width="800" height="600" fill="url(#grid)"/>
+          <circle cx="400" cy="300" r="180" fill="none" stroke="rgba(185,131,74,0.2)" stroke-width="2"/>
+          <text x="50%" y="46%" dominant-baseline="middle" text-anchor="middle" fill="#B9834A" font-family="Cormorant Garamond, serif" font-size="20" font-weight="700" letter-spacing="4">${category.toUpperCase()}</text>
+          <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="#FFFFFF" font-family="Poppins, sans-serif" font-size="28" font-weight="700" letter-spacing="2">${title.toUpperCase()}</text>
+          <text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Inter, sans-serif" font-size="13">[ PHOTO PLACEHOLDER — SWAP IN REAL IMAGE ]</text>
+        </svg>
+      `;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svgString);
+    }
+
+    function renderProjects(filter = 'all') {
+      projectsGrid.innerHTML = '';
+      const filtered = filter === 'all' 
+        ? SAAJVAN_PROJECTS 
+        : SAAJVAN_PROJECTS.filter(p => p.category.toLowerCase() === filter.toLowerCase());
+
+      filtered.forEach(project => {
+        const placeholderImg = generatePlaceholderSvg(project.title, project.category, project.colorHex);
+
+        const card = document.createElement('article');
+        card.className = 'project-card';
+        card.setAttribute('data-id', project.id);
+        card.innerHTML = `
+          <div class="project-media">
+            <img src="${placeholderImg}" alt="${project.title}" class="placeholder-svg" loading="lazy">
+          </div>
+          <div class="project-card-overlay">
+            <div class="project-cat-badge">${project.category}</div>
+            <h3 class="project-card-title">${project.title}</h3>
+            <p class="project-card-desc">${project.shortDesc}</p>
+          </div>
+          <button type="button" class="btn-explore" aria-label="Explore ${project.title}">
+            Explore More
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        `;
+
+        card.addEventListener('click', () => openProjectModal(project));
+        projectsGrid.appendChild(card);
+      });
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProjects(btn.dataset.filter);
+      });
+    });
+
+    function openProjectModal(project) {
+      if (!projectModal) return;
+      const heroSvg = generatePlaceholderSvg(project.title, project.category, project.colorHex);
+      
+      document.getElementById('modalHeroCat').textContent = project.category;
+      document.getElementById('modalHeroTitle').textContent = project.title;
+      document.getElementById('modalStory').textContent = project.story;
+      document.getElementById('journalTitle').textContent = project.journalTitle;
+      document.getElementById('journalArticle').innerHTML = project.articleHtml;
+
+      const heroElem = document.getElementById('modalHero');
+      if (heroElem) heroElem.style.background = `url("${heroSvg}") center/cover no-repeat`;
+
+      const galleryElem = document.getElementById('modalGallery');
+      if (galleryElem) {
+        galleryElem.innerHTML = '';
+        project.galleryLabels.forEach((label, idx) => {
+          const itemSvg = generatePlaceholderSvg(`${project.title} — 0${idx+1}`, project.category, project.colorHex);
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+          item.innerHTML = `<img src="${itemSvg}" alt="${label}">`;
+          item.addEventListener('click', () => openLightbox(itemSvg));
+          galleryElem.appendChild(item);
+        });
+      }
+
+      projectModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    if (modalBackBtn) {
+      modalBackBtn.addEventListener('click', () => {
+        if (projectModal) projectModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    }
+
+    function openLightbox(src) {
+      if (!lightboxModal || !lightboxContent) return;
+      lightboxContent.innerHTML = `<img src="${src}" style="max-width:100%; max-height:80vh; display:block; margin:0 auto; border:1px solid var(--saaj-gold);">`;
+      lightboxModal.classList.add('active');
+    }
+    if (lightboxClose) lightboxClose.addEventListener('click', () => lightboxModal.classList.remove('active'));
+    if (lightboxModal) {
+      lightboxModal.addEventListener('click', (e) => {
+        if (e.target === lightboxModal) lightboxModal.classList.remove('active');
+      });
+    }
+
+    renderProjects('all');
+  }
+
+  initProjectsSection();
+
   /* ---------- 6. 3-Stage Lead Capture Popup Modal State Machine ---------- */
   function initLeadModal() {
     const modalOverlay = document.getElementById('leadModalOverlay');
