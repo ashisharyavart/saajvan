@@ -679,8 +679,15 @@ section{position:relative;}
 }
 
 @media (max-width:760px){
+  .hero{
+    height: 85vh;
+    min-height: 560px;
+  }
   .hero-video-desktop{ display:none; }
-  .hero-video-mobile{ display:block; }
+  .hero-video-mobile{
+    display:block;
+    object-position: center center;
+  }
   .site-header{padding:14px 20px;}
   .main-nav{
     position:absolute; top:100%; left:0; right:0;
