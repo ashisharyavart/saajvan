@@ -69,6 +69,7 @@ function renderSiteConfig() {
     setText('footerLocation', cfg.contact.locationLine);
     setHref('fabWhatsapp', cfg.contact.whatsappHref);
     setHref('fabInstagram', cfg.contact.instagramHref);
+    setHref('fabYoutube', cfg.contact.youtubeHref);
     setHref('fabPhone', cfg.contact.phoneHref);
   }
 

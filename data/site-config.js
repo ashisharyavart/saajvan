@@ -50,6 +50,7 @@ window.SITE_CONFIG = {
     phoneHref: "tel:+919582300708",    // used in tel: / call links (digits only after "tel:")
     whatsappHref: "https://wa.me/919582300708",
     instagramHref: "https://instagram.com/saajvan",
+    youtubeHref: "https://www.youtube.com/@SaajvanDesignStudio",
     locationLine: "Based worldwide · Projects everywhere"
   },
 
