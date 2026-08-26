@@ -98,6 +98,43 @@ function renderSiteConfig() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ---------- 0a. Entrance gate — architectural door reveal ---------- */
+  (function initEntranceGate() {
+    const gate = document.getElementById('entranceGate');
+    if (!gate) return;
+
+    // Skip entirely for users who prefer reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      gate.classList.add('is-done');
+      return;
+    }
+
+    // Lock scrolling while gate is visible
+    document.documentElement.classList.add('gate-locked');
+
+    // Short pause (250ms), then trigger the opening animation
+    setTimeout(() => {
+      gate.classList.add('is-opening');
+
+      // Listen for the left panel animation to end (both panels animate in parallel)
+      const leftPanel = gate.querySelector('.entrance-panel--left');
+      if (leftPanel) {
+        leftPanel.addEventListener('animationend', () => {
+          // Remove the gate entirely and restore scrolling
+          gate.classList.add('is-done');
+          document.documentElement.classList.remove('gate-locked');
+        }, { once: true });
+      } else {
+        // Fallback: remove after animation duration
+        setTimeout(() => {
+          gate.classList.add('is-done');
+          document.documentElement.classList.remove('gate-locked');
+        }, 1200);
+      }
+    }, 250);
+  })();
+
   renderSiteConfig();
 
   /* ---------- 1. Mobile nav ---------- */

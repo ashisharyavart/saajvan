@@ -1706,3 +1706,94 @@ section{position:relative;}
   cursor: pointer;
   font-family: var(--font-inter);
 }
+
+/* ---------------------------------------------------------
+   ENTRANCE GATE — architectural door reveal
+--------------------------------------------------------- */
+.entrance-gate{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  pointer-events:all;
+  display:flex;
+  align-items:stretch;
+}
+.entrance-gate.is-done{
+  pointer-events:none;
+  display:none;
+}
+
+/* --- panels --- */
+.entrance-panel{
+  flex:0 0 50%;
+  width:50%;
+  height:100%;
+  background:var(--cream, #F2ECE0);
+  will-change:transform;
+  transition:none;
+}
+.entrance-panel--left{
+  transform:translateX(0);
+}
+.entrance-panel--right{
+  transform:translateX(0);
+}
+
+/* opening state — applied by JS */
+.entrance-gate.is-opening .entrance-panel--left{
+  animation:gate-slide-left 1100ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+.entrance-gate.is-opening .entrance-panel--right{
+  animation:gate-slide-right 1100ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes gate-slide-left{
+  0%   { transform:translateX(0); }
+  100% { transform:translateX(-100%); }
+}
+@keyframes gate-slide-right{
+  0%   { transform:translateX(0); }
+  100% { transform:translateX(100%); }
+}
+
+/* --- center logo --- */
+.entrance-logo{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%) scale(1);
+  z-index:2;
+  opacity:1;
+  will-change:opacity, transform;
+  transition:none;
+}
+.entrance-logo img{
+  display:block;
+  max-width:180px;
+  max-height:120px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  filter:none;
+}
+
+/* logo fade during opening */
+.entrance-gate.is-opening .entrance-logo{
+  animation:gate-logo-fade 900ms cubic-bezier(0.22, 1, 0.36, 1) 200ms forwards;
+}
+@keyframes gate-logo-fade{
+  0%   { opacity:1; transform:translate(-50%, -50%) scale(1); }
+  100% { opacity:0; transform:translate(-50%, -50%) scale(0.92); }
+}
+
+/* --- scroll lock while gate is active --- */
+html.gate-locked{
+  overflow:hidden !important;
+}
+
+/* --- prefers-reduced-motion: skip all animations --- */
+@media (prefers-reduced-motion: reduce){
+  .entrance-gate{
+    display:none !important;
+  }
+}
