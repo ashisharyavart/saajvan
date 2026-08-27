@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- All firm-specific info (name, contact, location, team) lives in data/site-config.js -->
   <script src="data/site-config.js"></script>
+  <script src="data/projects-data.js"></script>
 </head>
 
 <body>
@@ -241,53 +242,6 @@
 
     </div>
   </section>
-
-  <!-- ============ PROJECT DETAIL PAGE / MODAL ============ -->
-  <div class="project-modal" id="projectModal" role="dialog" aria-hidden="true">
-    <div class="modal-close-bar">
-      <button type="button" class="modal-back-btn" id="modalBackBtn">
-        ← Back to Portfolio
-      </button>
-      <span style="font-family: var(--font-cormorant); font-size:13px; text-transform:uppercase; letter-spacing:0.15em; color:var(--ink-soft);">
-        Saajvan Design Studio Case Study
-      </span>
-    </div>
-
-    <!-- HERO -->
-    <div class="modal-hero" id="modalHero">
-      <div class="modal-hero-content">
-        <div class="modal-hero-cat" id="modalHeroCat">Residential</div>
-        <h1 class="modal-hero-title" id="modalHeroTitle">Project Title</h1>
-      </div>
-    </div>
-
-    <!-- BODY CONTENT -->
-    <div class="modal-body">
-      <div class="modal-story-title">Project Narrative</div>
-      <div class="modal-story-p" id="modalStory">Project story text...</div>
-
-      <!-- PHOTO GALLERY -->
-      <div class="gallery-title">Architecture &amp; Interior Gallery</div>
-      <div class="gallery-grid" id="modalGallery">
-        <!-- Lightbox items -->
-      </div>
-
-      <!-- JOURNAL / SEO ARTICLE -->
-      <div class="journal-section">
-        <p class="journal-eyebrow">Architectural Journal</p>
-        <h2 class="journal-h2" id="journalTitle">Design Study</h2>
-        <div class="journal-article" id="journalArticle">
-          <!-- Article HTML -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LIGHTBOX ENLARGE MODAL -->
-  <div class="lightbox-modal" id="lightboxModal">
-    <span class="lightbox-close" id="lightboxClose">&times;</span>
-    <div class="lightbox-content" id="lightboxContent"></div>
-  </div>
 
   <!-- ============ ABOUT US ============ -->
   <section class="team" id="team">
