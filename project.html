@@ -505,9 +505,9 @@
         <p>Book a free 15-minute 3D concept &amp; space planning consultation with Advitya Malhotra.</p>
       </div>
       <div class="project-cta-actions">
-        <a href="index.html#contact" class="btn btn-dark" style="background: var(--proj-gold); color: #FFF; border: 1px solid var(--proj-gold-hover); padding: 12px 28px; text-decoration: none; font-family: var(--font-cormorant); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; font-size: 13px; display: inline-block;">
+        <button type="button" id="projectCtaBtn" class="btn btn-dark" data-open-lead-modal style="background: var(--proj-gold); color: #FFF; border: 1px solid var(--proj-gold-hover); padding: 12px 28px; text-decoration: none; font-family: var(--font-cormorant); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; font-size: 13px; display: inline-block; cursor: pointer;">
           Book a Free Consultation
-        </a>
+        </button>
       </div>
     </section>
 
@@ -767,6 +767,283 @@
 
       // Trigger asynchronous background preloading for all remaining images
       setTimeout(preloadAllProjectImages, 150);
+    })();
+  </script>
+
+  <!-- ============ LEAD CAPTURE POPUP MODAL ============ -->
+  <div class="lead-modal-overlay" id="leadModalOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
+    <div class="lead-modal-card" id="leadModalCard">
+      <button type="button" class="lead-modal-close" id="leadModalClose" aria-label="Close popup">&times;</button>
+      
+      <!-- FORM STATE -->
+      <div class="lead-modal-content" id="leadModalContent">
+        <h2 class="lead-modal-title" id="leadModalTitle">Let's design your dream space</h2>
+        
+        <form id="leadForm" novalidate>
+          <!-- 1. Dropdown Question -->
+          <div class="lead-field-group">
+            <div class="lead-custom-select-wrapper" id="customSelectWrapper">
+              <div class="lead-custom-select-trigger" id="customSelectTrigger" tabindex="0" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-label="What would you like to know more about?">
+                <span class="lead-select-value" id="customSelectValue">What would you like to know more about?</span>
+                <svg class="lead-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <ul class="lead-custom-select-options" id="customSelectOptions" role="listbox" hidden>
+                <li class="lead-select-option" data-value="Interior Design Services" role="option">Interior Design Services</li>
+                <li class="lead-select-option" data-value="Residential Interiors" role="option">Residential Interiors</li>
+                <li class="lead-select-option" data-value="Commercial Interiors" role="option">Commercial Interiors</li>
+                <li class="lead-select-option" data-value="Renovation / Remodeling" role="option">Renovation / Remodeling</li>
+                <li class="lead-select-option" data-value="Project Pricing" role="option">Project Pricing</li>
+                <li class="lead-select-option" data-value="Project Timeline" role="option">Project Timeline</li>
+                <li class="lead-select-option" data-value="Something Else" role="option">Something Else</li>
+              </ul>
+            </div>
+            <input type="hidden" id="leadInquiryType" name="inquiry_type" required>
+            <div class="lead-field-error" id="inquiryTypeError"></div>
+          </div>
+
+          <!-- 2. Name Field -->
+          <div class="lead-field-group">
+            <input type="text" id="leadName" name="name" class="lead-input" placeholder="Enter your name" required autocomplete="name">
+            <div class="lead-field-error" id="nameError"></div>
+          </div>
+
+          <!-- 3. Phone Number Field -->
+          <div class="lead-field-group">
+            <div class="lead-phone-input-wrap">
+              <span class="lead-country-code" title="India (+91)">🇮🇳 +91</span>
+              <input type="tel" id="leadPhone" name="phone" class="lead-input lead-phone-input" placeholder="Enter your mobile number" required autocomplete="tel" maxlength="10">
+            </div>
+            <div class="lead-field-error" id="phoneError"></div>
+          </div>
+
+          <!-- 4. CTA Button -->
+          <button type="submit" class="btn btn-lead-submit" id="leadSubmitBtn">
+            <span class="btn-text">Book a free 3D design session</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+
+          <!-- 5. Privacy / Terms Disclaimer -->
+          <p class="lead-disclaimer">
+            By submitting, you agree to our <a href="privacy-policy.html" target="_blank">privacy policy</a> and <a href="terms.html" target="_blank">terms of use</a>, allowing us to use your information as outlined.
+          </p>
+        </form>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="lead-modal-success" id="leadModalSuccess" hidden>
+        <div class="lead-success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h3 class="lead-success-title">Thank you!</h3>
+        <p class="lead-success-desc">We've received your request. Our team will get in touch with you shortly to schedule your free 3D design session.</p>
+        <button type="button" class="btn btn-dark lead-success-close-btn" id="leadSuccessCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function initProjectLeadModal() {
+      const modalOverlay = document.getElementById('leadModalOverlay');
+      const modalClose = document.getElementById('leadModalClose');
+      const leadForm = document.getElementById('leadForm');
+      const leadSubmitBtn = document.getElementById('leadSubmitBtn');
+      const modalContent = document.getElementById('leadModalContent');
+      const modalSuccess = document.getElementById('leadModalSuccess');
+      const successCloseBtn = document.getElementById('leadSuccessCloseBtn');
+
+      const selectWrapper = document.getElementById('customSelectWrapper');
+      const selectTrigger = document.getElementById('customSelectTrigger');
+      const selectValue = document.getElementById('customSelectValue');
+      const selectOptions = document.getElementById('customSelectOptions');
+      const hiddenInput = document.getElementById('leadInquiryType');
+
+      const nameInput = document.getElementById('leadName');
+      const phoneInput = document.getElementById('leadPhone');
+      const inquiryTypeError = document.getElementById('inquiryTypeError');
+      const nameError = document.getElementById('nameError');
+      const phoneError = document.getElementById('phoneError');
+
+      if (!modalOverlay) return;
+
+      const openModal = () => {
+        if (modalContent && modalSuccess) {
+          modalContent.hidden = false;
+          modalSuccess.hidden = true;
+        }
+        modalOverlay.classList.add('is-open');
+        modalOverlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeModal = () => {
+        modalOverlay.classList.remove('is-open');
+        modalOverlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+
+      // Trigger buttons
+      document.querySelectorAll('[data-open-lead-modal], #projectCtaBtn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal();
+        });
+      });
+
+      if (modalClose) modalClose.addEventListener('click', closeModal);
+      if (successCloseBtn) successCloseBtn.addEventListener('click', closeModal);
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+      });
+
+      // Dropdown
+      const toggleSelect = () => {
+        const isOpen = selectWrapper.classList.toggle('is-open');
+        selectTrigger.setAttribute('aria-expanded', isOpen);
+        selectOptions.hidden = !isOpen;
+      };
+
+      const closeSelect = () => {
+        if (!selectWrapper) return;
+        selectWrapper.classList.remove('is-open');
+        selectTrigger.setAttribute('aria-expanded', 'false');
+        selectOptions.hidden = true;
+      };
+
+      if (selectTrigger) {
+        selectTrigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleSelect();
+        });
+      }
+
+      if (selectOptions) {
+        const options = selectOptions.querySelectorAll('.lead-select-option');
+        options.forEach(opt => {
+          opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const val = opt.getAttribute('data-value');
+            hiddenInput.value = val;
+            selectValue.textContent = val;
+            selectValue.classList.add('has-value');
+            inquiryTypeError.textContent = '';
+            options.forEach(o => o.classList.remove('is-selected'));
+            opt.classList.add('is-selected');
+            closeSelect();
+          });
+        });
+      }
+
+      document.addEventListener('click', (e) => {
+        if (selectWrapper && !selectWrapper.contains(e.target)) closeSelect();
+      });
+
+      if (nameInput) {
+        nameInput.addEventListener('input', () => {
+          if (nameInput.value.trim()) nameError.textContent = '';
+        });
+      }
+
+      if (phoneInput) {
+        phoneInput.addEventListener('input', () => {
+          phoneInput.value = phoneInput.value.replace(/\D/g, '');
+          if (phoneInput.value.length === 10) phoneError.textContent = '';
+        });
+      }
+
+      const validateForm = () => {
+        let isValid = true;
+        if (!hiddenInput.value) {
+          inquiryTypeError.textContent = 'Please select what you would like to know more about.';
+          isValid = false;
+        } else {
+          inquiryTypeError.textContent = '';
+        }
+
+        const nameVal = nameInput ? nameInput.value.trim() : '';
+        if (!nameVal) {
+          nameError.textContent = 'Please enter your name.';
+          isValid = false;
+        } else {
+          nameError.textContent = '';
+        }
+
+        const phoneVal = phoneInput ? phoneInput.value.trim() : '';
+        const phoneRegex = /^[6-9]\d{9}$/;
+        if (!phoneVal) {
+          phoneError.textContent = 'Please enter your mobile number.';
+          isValid = false;
+        } else if (!phoneRegex.test(phoneVal)) {
+          phoneError.textContent = 'Please enter a valid 10-digit mobile number.';
+          isValid = false;
+        } else {
+          phoneError.textContent = '';
+        }
+
+        return isValid;
+      };
+
+      if (leadForm) {
+        leadForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!validateForm()) return;
+
+          const payload = {
+            inquiry_type: hiddenInput.value,
+            name: nameInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            created_at: new Date().toISOString()
+          };
+
+          leadSubmitBtn.disabled = true;
+          leadSubmitBtn.classList.add('is-loading');
+          const btnText = leadSubmitBtn.querySelector('.btn-text');
+          if (btnText) btnText.textContent = 'Booking your session...';
+
+          try {
+            const res = await fetch('/api/lead', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            const data = await res.json().catch(() => ({}));
+
+            if (res.ok || res.status === 404) {
+              localStorage.setItem('saajvan_lead_submitted', 'true');
+              try {
+                const existingLeads = JSON.parse(localStorage.getItem('saajvan_leads') || '[]');
+                existingLeads.unshift({
+                  id: 'lead_' + Date.now(),
+                  name: payload.name,
+                  phone: '+91 ' + payload.phone,
+                  rawPhone: payload.phone,
+                  interested_in: payload.inquiry_type,
+                  inquiry_type: payload.inquiry_type,
+                  status: 'New Lead',
+                  created_at: payload.created_at
+                });
+                localStorage.setItem('saajvan_leads', JSON.stringify(existingLeads));
+              } catch (e) {}
+
+              modalContent.hidden = true;
+              modalSuccess.hidden = false;
+            } else {
+              phoneError.textContent = data.message || 'Something went wrong. Please try again.';
+            }
+          } catch (err) {
+            phoneError.textContent = 'Unable to connect. Please check your network and try again.';
+          } finally {
+            leadSubmitBtn.disabled = false;
+            leadSubmitBtn.classList.remove('is-loading');
+            if (btnText) btnText.textContent = 'Book a free 3D design session';
+          }
+        });
+      }
     })();
   </script>
 </body>

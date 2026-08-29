@@ -59,9 +59,8 @@ function renderSiteConfig() {
     setText('footerTagline', cfg.about.footerTagline);
   }
 
-  // Contact — CTA banner, footer, floating action buttons
+  // Contact — footer, floating action buttons
   if (cfg.contact) {
-    setHref('ctaEmailLink', cfg.contact.email ? `mailto:${cfg.contact.email}` : undefined);
     setHref('footerEmailLink', cfg.contact.email ? `mailto:${cfg.contact.email}` : undefined);
     setText('footerEmailLink', cfg.contact.email);
     setHref('footerPhoneLink', cfg.contact.phoneHref);
@@ -389,9 +388,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    const openModal = () => {
+    const openModal = (force = false) => {
       clearActiveTimer();
-      if (isPermanentlySubmitted() || isSessionDismissed()) return;
+      if (!force && (isPermanentlySubmitted() || isSessionDismissed())) return;
+
+      if (force && modalContent && modalSuccess) {
+        modalContent.hidden = false;
+        modalSuccess.hidden = true;
+      }
+
       modalOverlay.classList.add('is-open');
       modalOverlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -411,10 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (closeCount === 1) {
         // Closed Popup #1 -> Start 15-second timer for Popup #2
-        timerId = setTimeout(openModal, 15000);
+        timerId = setTimeout(() => openModal(false), 15000);
       } else if (closeCount === 2) {
         // Closed Popup #2 -> Start 60-second timer for Popup #3
-        timerId = setTimeout(openModal, 60000);
+        timerId = setTimeout(() => openModal(false), 60000);
       } else if (closeCount >= 3) {
         // Closed Popup #3 -> FINAL ATTEMPT REACHED: Stop for remainder of session
         sessionStorage.setItem('lead_session_dismissed', 'true');
@@ -426,15 +431,40 @@ document.addEventListener('DOMContentLoaded', () => {
       const currentCloseCount = parseInt(sessionStorage.getItem('lead_close_count') || '0', 10);
       if (currentCloseCount === 1) {
         // Visitor navigated after closing Popup #1 -> Wait 15 seconds for Popup #2
-        timerId = setTimeout(openModal, 15000);
+        timerId = setTimeout(() => openModal(false), 15000);
       } else if (currentCloseCount === 2) {
         // Visitor navigated after closing Popup #2 -> Wait 60 seconds for Popup #3
-        timerId = setTimeout(openModal, 60000);
+        timerId = setTimeout(() => openModal(false), 60000);
       } else if (currentCloseCount === 0) {
         // First visit -> Wait 20 seconds for Popup #1
-        timerId = setTimeout(openModal, 20000);
+        timerId = setTimeout(() => openModal(false), 20000);
       }
     }
+
+    // Manual CTA triggers across the page (Book a Consultation, Contact Us, etc.)
+    const triggerSelectors = [
+      '#ctaEmailLink',
+      '.header-cta',
+      '[data-open-lead-modal]',
+      '.btn-book-consultation',
+      'a[href="#contact"]'
+    ];
+
+    document.querySelectorAll(triggerSelectors.join(', ')).forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal(true);
+      });
+    });
+
+    // Check URL hash on load & on hashchange
+    const checkHashTrigger = () => {
+      if (window.location.hash === '#contact') {
+        setTimeout(() => openModal(true), 300);
+      }
+    };
+    window.addEventListener('hashchange', checkHashTrigger);
+    checkHashTrigger();
 
     // Close Listeners
     if (modalClose) modalClose.addEventListener('click', closeModal);
