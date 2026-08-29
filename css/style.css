@@ -1335,12 +1335,14 @@ section{position:relative;}
   margin-bottom: 54px;
 }
 .projects-eyebrow {
-  font-family: var(--font-sacramento);
-  font-size: clamp(38px, 4vw, 54px);
-  color: var(--saaj-gold);
-  margin: 0 0 6px;
+  font-family: var(--font-heading);
+  font-size: clamp(44px, 4.5vw, 64px);
+  color: var(--accent);
+  margin: 0 0 20px;
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.1;
+  text-transform: none;
+  letter-spacing: normal;
 }
 .projects-title {
   font-family: var(--font-playfair);
