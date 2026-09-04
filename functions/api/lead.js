@@ -163,6 +163,64 @@ export async function onRequestPost(context) {
       }
     }
 
+    // 5.1 Meta Official WhatsApp Cloud API (Parallel integration)
+    const metaToken = env?.META_ACCESS_TOKEN;
+    const metaPhoneId = env?.META_PHONE_NUMBER_ID;
+
+    if (metaToken && metaPhoneId && notifyToRaw) {
+      try {
+        const dateStr = new Date(created_at).toLocaleString('en-IN', {
+          timeZone: 'Asia/Kolkata',
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        const whatsappMessage =
+          `🏠 *New 3D Design Session Booking*\n\n` +
+          `👤 *Name:* ${name}\n` +
+          `📱 *Phone:* +91 ${phone}\n` +
+          `🎯 *Interested In:* ${inquiry_type}\n` +
+          `🕐 *Date:* ${dateStr}\n\n` +
+          `Tap to call: +91 ${phone}`;
+
+        const recipientNumbers = notifyToRaw
+          .split(',')
+          .map(num => num.replace(/\D/g, '').trim())
+          .filter(num => num.length >= 10);
+
+        for (const targetNum of recipientNumbers) {
+          try {
+            const metaRes = await fetch(`https://graph.facebook.com/v20.0/${metaPhoneId}/messages`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${metaToken}`
+              },
+              body: JSON.stringify({
+                messaging_product: 'whatsapp',
+                recipient_type: 'individual',
+                to: targetNum,
+                type: 'text',
+                text: {
+                  preview_url: false,
+                  body: whatsappMessage
+                }
+              })
+            });
+            const metaBody = await metaRes.text();
+            console.log(`[Meta WhatsApp -> ${targetNum}] status=${metaRes.status} body=${metaBody}`);
+          } catch (singleMetaErr) {
+            console.error(`Error sending Meta WhatsApp alert to ${targetNum}:`, singleMetaErr);
+          }
+        }
+      } catch (metaErr) {
+        console.error('Meta WhatsApp notification error:', metaErr);
+      }
+    }
+
     // 6. Return Success Response
     return new Response(
       JSON.stringify({
