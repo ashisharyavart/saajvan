@@ -4,7 +4,8 @@
   "description": "Bilvary architecture website starter",
   "main": "index.html",
   "scripts": {
-    "dev": "npx -y browser-sync start --server --files \"index.html, css/**/*.css, js/**/*.js, data/**/*.js\""
+    "dev": "npx -y browser-sync start --server --files \"index.html, css/**/*.css, js/**/*.js, data/**/*.js\"",
+    "dev:pages": "wrangler pages dev ."
   },
   "keywords": [],
   "author": "",

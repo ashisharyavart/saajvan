@@ -1,0 +1,9 @@
+# Example environment variables template for local development
+# Copy to .dev.vars and fill in your values
+
+# Fast2SMS Quick SMS API Key (from Fast2SMS Dev API dashboard)
+FAST2SMS_API_KEY=your_fast2sms_api_key_here
+
+# Client / Business owner phone number to receive lead SMS notifications
+# Format: 10-digit Indian mobile number (e.g. 9876543210)
+CLIENT_PHONE_NUMBER=9876543210
